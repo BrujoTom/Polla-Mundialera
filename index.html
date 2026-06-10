@@ -1866,7 +1866,7 @@ function irA(id) {
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
   document.getElementById('sec-'+id).classList.add('activa');
   const btns = document.querySelectorAll('nav button');
-  const labels = {'inicio':0,'jugadores':1,'pronosticos':2,'resultados':3,'posiciones':4};
+  const labels = {'inicio':0,'jugadores':0,'pronosticos':1,'resultados':2,'posiciones':3};
   btns[labels[id]].classList.add('active');
   seccionActual = id;
   renderSeccion(id);
