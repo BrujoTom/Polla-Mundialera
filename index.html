@@ -1267,8 +1267,7 @@ main {
     </div>
     <nav>
       <button class="active" onclick="irA('inicio')">🏠 Inicio</button>
-      <button onclick="irA('jugadores')">👥 Jugadores</button>
-      <button onclick="irA('pronosticos')">📝 Pronósticos</button>
+            <button onclick="irA('pronosticos')">📝 Pronósticos</button>
       <button onclick="irA('resultados')">⚽ Resultados</button>
       <button onclick="irA('posiciones')">🏆 Posiciones</button>
     </nav>
@@ -1430,20 +1429,8 @@ main {
 <!-- ════════════ JUGADORES ════════════ -->
 <section id="sec-jugadores" class="seccion">
   <div class="card">
-    <div class="card-titulo">👥 Gestión de Participantes</div>
-    <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-bottom:18px">
-      <div class="form-grupo" style="flex:1;min-width:180px">
-        <label>Nombre del participante</label>
-        <input type="text" id="input-nombre-jugador" placeholder="Ej: Carlos" onkeydown="if(event.key==='Enter')agregarJugador()">
-      </div>
-      <button class="btn btn-primary" onclick="agregarJugador()">+ Agregar</button>
-    </div>
-    <div id="lista-jugadores-chips" style="margin-bottom:8px"></div>
-  </div>
-
-  <div class="card">
     <div class="card-titulo">🎯 Pronósticos Especiales por Jugador</div>
-    <div class="alerta alerta-info">Pronósticos especiales de cada participante. Solo lectura — se cargaron al registrar.</div>
+    <div class="alerta alerta-info">Pronósticos especiales de cada participante. Solo lectura.</div>
     <div id="lista-pronosticos-especiales"></div>
   </div>
 </section>
@@ -1998,85 +1985,38 @@ function renderInicio() {
 //  RENDER JUGADORES
 // ══════════════════════════════════════════════════════════
 function renderJugadores() {
-  const chips = document.getElementById('lista-jugadores-chips');
-  if (estado.jugadores.length === 0) {
-    chips.innerHTML = '<div class="empty-state"><div class="icon">👤</div><p>No hay participantes aún.</p></div>';
-  } else {
-    chips.innerHTML = estado.jugadores.map(j =>
-      `<span class="jugador-chip">${j.nombre}<span class="jugador-chip-remove" onclick="eliminarJugador('${j.id}')">×</span></span>`
-    ).join('');
-  }
-
   const cont = document.getElementById('lista-pronosticos-especiales');
+  if (!cont) return;
   if (estado.jugadores.length === 0) {
-    cont.innerHTML = '<div class="empty-state"><div class="icon">👤</div><p>Agrega participantes primero.</p></div>';
+    cont.innerHTML = '<div class="empty-state"><div class="icon">👤</div><p>No hay participantes.</p></div>';
     return;
   }
-
   const esp_g = estado.especiales || {};
-  let html = `<div class="card" style="background:rgba(201,166,58,0.05);border:1px solid rgba(201,166,58,0.2);margin-bottom:14px">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <b style="color:var(--gold-light)">🌍 Resultados Especiales Oficiales</b>
-      <span style="font-size:11px;color:var(--text-dim)">(se actualiza automáticamente)</span>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;font-size:13px;font-family:Inter,sans-serif">
-      <div><b>🏆 Campeón:</b> ${esp_g.campeon||'<span style="color:var(--text-dim)">Por definir</span>'}</div>
-      <div><b>🥈 Subcampeón:</b> ${esp_g.subcampeon||'<span style="color:var(--text-dim)">Por definir</span>'}</div>
-      <div><b>⚽ Goleador:</b> ${esp_g.goleador||'<span style="color:var(--text-dim)">Por definir</span>'}</div>
-      <div><b>🎖 Semis:</b> ${(esp_g.semifinalistas||[]).join(', ')||'<span style="color:var(--text-dim)">Por definir</span>'}</div>
-    </div>
-  </div>`;
-
-  html += estado.jugadores.map(j => {
+  let html = '<div class="card" style="background:rgba(201,166,58,0.05);border:1px solid rgba(201,166,58,0.2);margin-bottom:14px">'
+    + '<div style="margin-bottom:10px"><b style="color:var(--gold-light)">🌍 Resultados Especiales Oficiales</b>'
+    + '<span style="font-size:11px;color:var(--text-dim);margin-left:8px">(automático)</span></div>'
+    + '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;font-size:13px;font-family:Inter,sans-serif">'
+    + '<div>🏆 Campeón: <b>' + (esp_g.campeon || '<span style="color:var(--text-dim)">Por definir</span>') + '</b></div>'
+    + '<div>🥈 Subcampeón: <b>' + (esp_g.subcampeon || '<span style="color:var(--text-dim)">Por definir</span>') + '</b></div>'
+    + '<div>⚽ Goleador: <b>' + (esp_g.goleador || '<span style="color:var(--text-dim)">Por definir</span>') + '</b></div>'
+    + '<div>🎖 Semis: <b>' + ((esp_g.semifinalistas || []).join(', ') || '<span style="color:var(--text-dim)">Por definir</span>') + '</b></div>'
+    + '</div></div>';
+  html += estado.jugadores.map(function(j) {
     const esp = j.especiales || {};
-    return `<div class="partido-card">
-      <div class="partido-header">
-        <b style="font-size:15px">${j.nombre}</b>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px;font-size:13px;font-family:Inter,sans-serif">
-        <div>🏆 <b>${esp.campeon||'—'}</b></div>
-        <div>🥈 <b>${esp.subcampeon||'—'}</b></div>
-        <div>⚽ <b>${esp.goleador||'—'}</b></div>
-        <div>🎖 <b>${(esp.semifinalistas||[]).join(', ')||'—'}</b></div>
-      </div>
-    </div>`;
+    return '<div class="partido-card">'
+      + '<div class="partido-header"><b style="font-size:15px">' + j.nombre + '</b></div>'
+      + '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px;font-size:13px;font-family:Inter,sans-serif">'
+      + '<div>🏆 Campeón: <b>' + (esp.campeon || '—') + '</b></div>'
+      + '<div>🥈 Subcampeón: <b>' + (esp.subcampeon || '—') + '</b></div>'
+      + '<div>⚽ Goleador: <b>' + (esp.goleador || '—') + '</b></div>'
+      + '<div>🎖 Semis: <b>' + ((esp.semifinalistas || []).join(', ') || '—') + '</b></div>'
+      + '</div></div>';
   }).join('');
-
   cont.innerHTML = html;
 }
 
-function agregarJugador() {
-  const input = document.getElementById('input-nombre-jugador');
-  const nombre = input.value.trim();
-  if (!nombre) return;
-  if (estado.jugadores.find(j => j.nombre.toLowerCase() === nombre.toLowerCase())) {
-    alert('Ya existe un participante con ese nombre.'); return;
-  }
-  estado.jugadores.push({
-    id: 'j'+Date.now(),
-    nombre,
-    especiales: { campeon:'', subcampeon:'', goleador:'', semifinalistas:[] }
-  });
-  input.value = '';
-  guardarEstado();
-  renderJugadores();
-  renderInicio();
-}
 
-function eliminarJugador(id) {
-  if (!confirm('¿Eliminar este participante?')) return;
-  estado.jugadores = estado.jugadores.filter(j => j.id !== id);
-  delete estado.puntajes[id];
-  delete estado.pronosticos[id];
-  guardarEstado();
-  renderJugadores();
-  renderInicio();
-}
 
-// ══════════════════════════════════════════════════════════
-//  RENDER PRONÓSTICOS
-// ══════════════════════════════════════════════════════════
-let filtroFasePronostico = 'Grupos';
 
 function renderPronosticosPartidos() {
   const cont = document.getElementById('lista-pronosticos-partidos');
@@ -2560,7 +2500,7 @@ function compartirTablaWhatsApp() {
   }
   if (!estado.pronosticos[jugador.id]) estado.pronosticos[jugador.id] = {};
   Object.assign(estado.pronosticos[jugador.id], pron_pablinho);
-  jugador.especiales = {campeon:'Brasil',subcampeon:'',goleador:'',semifinalistas:[]};
+  jugador.especiales = {campeon:'Brasil',subcampeon:'Inglaterra',goleador:'Harry Kane',semifinalistas:['Holanda','Portugal','España','Inglaterra']};
 })();
 
 // ── PRELOAD SAMPAYO (segunda instancia — eliminada, consolidada arriba) ──
@@ -2603,6 +2543,19 @@ function compartirTablaWhatsApp() {
   jugador.especiales = {campeon:'Espa\u00f1a',subcampeon:'Francia',goleador:'Harry Kane',semifinalistas:['Espa\u00f1a','Inglaterra','Francia','Argentina']};
 })();
   guardarEstado();
+
+// ── PRELOAD HERNO ──
+(function() {
+  var pron_herno = {'G1':{local:1,visitante:0},'G2':{local:2,visitante:0},'G3':{local:1,visitante:1},'G4':{local:1,visitante:2},'G5':{local:2,visitante:3},'G6':{local:0,visitante:3},'G7':{local:0,visitante:0},'G8':{local:0,visitante:2},'G9':{local:1,visitante:1},'G10':{local:2,visitante:2},'G11':{local:2,visitante:2},'G12':{local:2,visitante:1},'G13':{local:0,visitante:1},'G14':{local:0,visitante:2},'G15':{local:1,visitante:1},'G16':{local:3,visitante:3},'G17':{local:1,visitante:2},'G18':{local:4,visitante:4},'G19':{local:2,visitante:2},'G20':{local:1,visitante:1},'G21':{local:1,visitante:1},'G22':{local:1,visitante:0},'G23':{local:2,visitante:1},'G24':{local:1,visitante:0},'G25':{local:6,visitante:0},'G26':{local:0,visitante:1},'G27':{local:2,visitante:0},'G28':{local:3,visitante:0},'G29':{local:1,visitante:2},'G30':{local:2,visitante:2},'G31':{local:0,visitante:1},'G32':{local:1,visitante:2},'G33':{local:2,visitante:1},'G34':{local:1,visitante:3},'G35':{local:2,visitante:1},'G36':{local:1,visitante:3},'G37':{local:2,visitante:0},'G38':{local:0,visitante:0},'G39':{local:3,visitante:0},'G40':{local:0,visitante:1},'G41':{local:3,visitante:3},'G42':{local:0,visitante:2},'G43':{local:5,visitante:0},'G44':{local:0,visitante:1},'G45':{local:3,visitante:2},'G46':{local:2,visitante:0},'G47':{local:2,visitante:3},'G48':{local:1,visitante:3},'G49':{local:3,visitante:0},'G50':{local:1,visitante:2},'G51':{local:2,visitante:1},'G52':{local:3,visitante:1},'G53':{local:1,visitante:2},'G54':{local:2,visitante:2},'G55':{local:3,visitante:2},'G56':{local:2,visitante:0},'G57':{local:2,visitante:1},'G58':{local:0,visitante:3},'G59':{local:2,visitante:1},'G60':{local:1,visitante:3},'G61':{local:3,visitante:0},'G62':{local:0,visitante:2},'G63':{local:2,visitante:1},'G64':{local:2,visitante:0},'G65':{local:2,visitante:2},'G66':{local:1,visitante:2},'G67':{local:0,visitante:1},'G68':{local:2,visitante:0},'G69':{local:1,visitante:0},'G70':{local:0,visitante:3},'G71':{local:2,visitante:1},'G72':{local:1,visitante:0}};
+  var jugador = estado.jugadores.find(function(j){ return j.nombre.toLowerCase() === 'herno'; });
+  if (!jugador) {
+    jugador = {id:'j_auto_herno', nombre:'Herno', especiales:{campeon:'',subcampeon:'',goleador:'',semifinalistas:[]}};
+    estado.jugadores.push(jugador);
+  }
+  if (!estado.pronosticos[jugador.id]) estado.pronosticos[jugador.id] = {};
+  Object.assign(estado.pronosticos[jugador.id], pron_herno);
+  jugador.especiales = {campeon:'Francia',subcampeon:'Portugal',goleador:'Dembélé',semifinalistas:['Argentina','Francia','Portugal','Turquía']};
+})();
 recalcularPuntajes();
 renderInicio();
 iniciarAutoUpdate();
