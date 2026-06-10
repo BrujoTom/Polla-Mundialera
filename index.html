@@ -1630,7 +1630,7 @@ function estadoDefault() {
     pronosticos: {},
     puntajes: {},
     especiales: {},
-    version: 2,
+    version: 3,
   };
 }
 
@@ -1639,7 +1639,7 @@ function cargarEstado() {
     const raw = localStorage.getItem('polla_mundial_2026');
     if (!raw) return estadoDefault();
     const parsed = JSON.parse(raw);
-    if (!parsed.partidos || parsed.version !== 2) {
+    if (!parsed.partidos || parsed.version !== 3) {
       const def = estadoDefault();
       def.jugadores = parsed.jugadores || [];
       def.pronosticos = parsed.pronosticos || {};
@@ -2081,6 +2081,7 @@ function renderPronosticosPartidos() {
 // ══════════════════════════════════════════════════════════
 //  RENDER RESULTADOS
 // ══════════════════════════════════════════════════════════
+let filtroFasePronostico = 'Grupos';
 let filtroFaseResultados = 'Grupos';
 
 function renderPartidosResultados() {
