@@ -1731,35 +1731,44 @@ function guardarEstado() {
 
 // Mapa de nombres API → nombres en el estado
 const TEAM_NAME_MAP = {
-  // Grupo A
-  'mexico': 'México', 'méxico': 'México', 'south africa': 'Sud Africa', 'sudáfrica': 'Sud Africa',
-  'south korea': 'Corea', 'korea republic': 'Corea', 'korea': 'Corea',
+  // Grupo A — football-data.org usa estos nombres en inglés
+  'mexico': 'México', 'méxico': 'México',
+  'south africa': 'Sud Africa', 'sudáfrica': 'Sud Africa',
+  'korea republic': 'Corea', 'south korea': 'Corea', 'korea': 'Corea',
   'czech republic': 'R. Checa', 'czechia': 'R. Checa', 'czech': 'R. Checa',
   // Grupo B
-  'canada': 'Canadá', 'bosnia and herzegovina': 'Bosnia y Herz.', 'bosnia': 'Bosnia y Herz.',
+  'canada': 'Canadá',
+  'bosnia and herzegovina': 'Bosnia y Herz.', 'bosnia': 'Bosnia y Herz.',
   'qatar': 'Qatar', 'switzerland': 'Suiza',
   // Grupo C
   'brazil': 'Brasil', 'morocco': 'Marruecos', 'haiti': 'Haití', 'scotland': 'Escocia',
   // Grupo D
-  'usa': 'EE.UU.', 'united states': 'EE.UU.', 'turkey': 'Turquía', 'australia': 'Australia', 'paraguay': 'Paraguay',
+  'usa': 'EE.UU.', 'united states': 'EE.UU.', 'us': 'EE.UU.',
+  'turkey': 'Turquía', 'türkiye': 'Turquía',
+  'australia': 'Australia', 'paraguay': 'Paraguay',
   // Grupo E
-  'germany': 'Alemania', "côte d'ivoire": 'C. de Marfil', 'ivory coast': 'C. de Marfil',
+  'germany': 'Alemania',
+  "côte d'ivoire": 'C. de Marfil', "cote d'ivoire": 'C. de Marfil', 'ivory coast': 'C. de Marfil',
   'ecuador': 'Ecuador', 'curaçao': 'Curazao', 'curacao': 'Curazao',
   // Grupo F
-  'netherlands': 'Países Bajos', 'japan': 'Japón', 'sweden': 'Suecia', 'tunisia': 'Túnez',
+  'netherlands': 'Países Bajos', 'holland': 'Países Bajos',
+  'japan': 'Japón', 'sweden': 'Suecia', 'tunisia': 'Túnez',
   // Grupo G
   'belgium': 'Bélgica', 'egypt': 'Egipto', 'iran': 'Irán',
+  'islamic republic of iran': 'Irán',
   'new zealand': 'Nueva Zelanda',
   // Grupo H
-  'spain': 'España', 'cape verde': 'C. Verde', 'cabo verde': 'C. Verde',
+  'spain': 'España',
+  'cape verde': 'C. Verde', 'cabo verde': 'C. Verde',
   'saudi arabia': 'Arabia S.', 'uruguay': 'Uruguay',
   // Grupo I
   'france': 'Francia', 'senegal': 'Senegal', 'iraq': 'Irak', 'norway': 'Noruega',
   // Grupo J
   'argentina': 'Argentina', 'algeria': 'Argelia', 'austria': 'Austria', 'jordan': 'Jordania',
   // Grupo K
-  'portugal': 'Portugal', 'dr congo': 'RD Congo', 'congo dr': 'RD Congo',
-  'democratic republic of congo': 'RD Congo',
+  'portugal': 'Portugal',
+  'dr congo': 'RD Congo', 'congo dr': 'RD Congo', 'congo, dr': 'RD Congo',
+  'democratic republic of congo': 'RD Congo', 'congo': 'RD Congo',
   'uzbekistan': 'Uzbekistán', 'colombia': 'Colombia',
   // Grupo L
   'england': 'Inglaterra', 'croatia': 'Croacia', 'ghana': 'Ghana', 'panama': 'Panamá',
@@ -1775,46 +1784,45 @@ let lastUpdateTime = null;
 let liveGamesActive = false;
 
 async function fetchWorldCupResults() {
-  const dot = document.getElementById('update-dot');
-  const txt = document.getElementById('update-text');
+  const dot    = document.getElementById('update-dot');
+  const txt    = document.getElementById('update-text');
   const timeEl = document.getElementById('update-time');
 
   try {
-    // ESPN API pública — sin token, sin restricciones de dominio
     const response = await fetch(
-      'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard'
+      'https://api.football-data.org/v4/competitions/WC/matches',
+      { headers: { 'X-Auth-Token': 'dc3d5ee6bd31409989b550363926cfaa' } }
     );
 
-    if (!response.ok) throw new Error('ESPN API no disponible');
+    if (!response.ok) throw new Error('API error ' + response.status);
 
     const data = await response.json();
-    const events = data.events || [];
+    const matches = data.matches || [];
 
     let actualizados = 0;
-    let tickerItems = [];
-    let liveMatches = [];
+    let tickerItems  = [];
+    let liveList     = [];
 
-    events.forEach(ev => {
-      const comp = ev.competitions?.[0];
-      if (!comp) return;
-
-      const status = comp.status?.type?.name; // STATUS_IN_PROGRESS, STATUS_FINAL, STATUS_SCHEDULED
-      const esEnVivo  = status === 'STATUS_IN_PROGRESS' || status === 'STATUS_HALFTIME';
-      const esFinal   = status === 'STATUS_FINAL';
+    matches.forEach(match => {
+      const st = match.status; // FINISHED, IN_PLAY, PAUSED, TIMED, SCHEDULED
+      const esEnVivo = st === 'IN_PLAY' || st === 'PAUSED';
+      const esFinal  = st === 'FINISHED';
       if (!esEnVivo && !esFinal) return;
 
-      const home = comp.competitors?.find(c => c.homeAway === 'home');
-      const away = comp.competitors?.find(c => c.homeAway === 'away');
-      if (!home || !away) return;
+      const homeRaw = match.homeTeam?.name || match.homeTeam?.shortName || '';
+      const awayRaw = match.awayTeam?.name || match.awayTeam?.shortName || '';
+      console.log('[FD]', st, '|', homeRaw, 'vs', awayRaw, '|',
+        match.score?.fullTime?.home, '-', match.score?.fullTime?.away);
 
-      const homeRaw = home.team?.displayName || home.team?.name || '';
-      const awayRaw = away.team?.displayName || away.team?.name || '';
-      console.log('[ESPN partido]', status, '|', homeRaw, home.score, '-', away.score, awayRaw);
       const homeNorm = normalizeTeamName(homeRaw);
       const awayNorm = normalizeTeamName(awayRaw);
-      console.log('[ESPN norm]', homeNorm, 'vs', awayNorm);
-      const golesHome = parseInt(home.score ?? '0', 10);
-      const golesAway = parseInt(away.score ?? '0', 10);
+
+      const golesHome = esEnVivo
+        ? (match.score?.fullTime?.home ?? match.score?.halfTime?.home ?? 0)
+        : (match.score?.fullTime?.home ?? 0);
+      const golesAway = esEnVivo
+        ? (match.score?.fullTime?.away ?? match.score?.halfTime?.away ?? 0)
+        : (match.score?.fullTime?.away ?? 0);
 
       const partido = estado.partidos.find(p =>
         (p.local === homeNorm && p.visitante === awayNorm) ||
@@ -1827,7 +1835,7 @@ async function fetchWorldCupResults() {
         const resVis   = invertido ? golesHome  : golesAway;
 
         partido.enVivo = esEnVivo;
-        partido.minuto = esEnVivo ? (comp.status?.displayClock ?? '') : null;
+        partido.minuto = esEnVivo ? (match.minute ?? '') : null;
 
         if (!partido.resultado ||
             partido.resultado.local    !== resLocal ||
@@ -1835,16 +1843,10 @@ async function fetchWorldCupResults() {
           partido.resultado = { local: resLocal, visitante: resVis };
           actualizados++;
           tickerItems.push(
-            `${partido.local} ${resLocal} - ${resVis} ${partido.visitante}${esEnVivo ? ' 🔴' : ''}`
+            `${partido.local} ${resLocal}-${resVis} ${partido.visitante}${esEnVivo ? ' 🔴' : ''}`
           );
         }
-
-        if (esEnVivo) {
-          liveMatches.push({
-            nombre: `${partido.local} ${resLocal} - ${resVis} ${partido.visitante}`,
-            reloj: comp.status?.displayClock ?? ''
-          });
-        }
+        if (esEnVivo) liveList.push(partido);
       }
     });
 
@@ -1855,11 +1857,13 @@ async function fetchWorldCupResults() {
       renderInicio();
     }
 
-    liveGamesActive = liveMatches.length > 0;
+    liveGamesActive = liveList.length > 0;
     document.getElementById('live-badge').style.display = liveGamesActive ? 'flex' : 'none';
 
-    if (liveMatches.length > 0) {
-      const liveTexts = liveMatches.map(m => `🔴 ${m.nombre} (${m.reloj})`);
+    if (liveList.length > 0) {
+      const liveTexts = liveList.map(p =>
+        `🔴 ${p.local} ${p.resultado.local}-${p.resultado.visitante} ${p.visitante}${p.minuto ? ' ('+p.minuto+"')" : ''}`
+      );
       document.getElementById('ticker-content').textContent = liveTexts.join(' · ');
     } else if (tickerItems.length > 0) {
       document.getElementById('ticker-content').textContent = tickerItems.join(' · ');
@@ -1872,18 +1876,19 @@ async function fetchWorldCupResults() {
     lastUpdateTime = new Date();
     dot.className = 'update-dot active';
     txt.textContent = liveGamesActive
-      ? `🔴 ${liveMatches.length} partido(s) EN VIVO — actualizando cada 30 seg`
+      ? `🔴 ${liveList.length} partido(s) EN VIVO — actualizando cada 30 seg`
       : `Sincronizado — ${actualizados > 0 ? actualizados + ' resultado(s) nuevo(s)' : 'sin cambios'}`;
     timeEl.textContent = lastUpdateTime.toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'});
 
   } catch (err) {
+    const dot = document.getElementById('update-dot');
+    const txt = document.getElementById('update-text');
     dot.className = 'update-dot';
     txt.textContent = 'Sin conexión — reintentando...';
-    document.getElementById('ticker-content').textContent =
-      '⚽ Polla Mundial 2026 — Los resultados se actualizan automáticamente';
-    console.error('Error ESPN API:', err);
+    console.error('[FD Error]', err);
   }
 }
+
 
 function iniciarAutoUpdate() {
   fetchWorldCupResults();
