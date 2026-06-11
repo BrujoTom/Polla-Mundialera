@@ -1789,12 +1789,8 @@ async function fetchWorldCupResults() {
   const timeEl = document.getElementById('update-time');
 
   try {
-    // Usamos un proxy CORS para evitar el bloqueo de football-data.org
-    const apiUrl = 'https://api.football-data.org/v4/competitions/WC/matches';
-    const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(apiUrl);
-    const response = await fetch(proxyUrl, {
-      headers: { 'X-Auth-Token': 'dc3d5ee6bd31409989b550363926cfaa' }
-    });
+    // Llamamos a nuestro propio proxy en Vercel (evita CORS)
+    const response = await fetch('/api/scores');
 
     if (!response.ok) throw new Error('API error ' + response.status);
 
