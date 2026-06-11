@@ -1504,94 +1504,95 @@ main {
 //  DATOS DEL MUNDIAL 2026
 // ══════════════════════════════════════════════════════════
 const GRUPOS_MUNDIAL = {
-  'A': [['México','🇲🇽'],['Corea del Sur','🇰🇷'],['Sudáfrica','🇿🇦'],['Rep. Checa','🇨🇿']],
-  'B': [['Canadá','🇨🇦'],['Bosnia y Herz.','🇧🇦'],['Qatar','🇶🇦'],['Suiza','🇨🇭']],
+  'A': [['México','🇲🇽'],['Corea','🇰🇷'],['R. Checa','🇨🇿'],['Sud Africa','🇿🇦']],
+  'B': [['Canadá','🇨🇦'],['Bosnia','🇧🇦'],['Qatar','🇶🇦'],['Suiza','🇨🇭']],
   'C': [['Brasil','🇧🇷'],['Marruecos','🇲🇦'],['Haití','🇭🇹'],['Escocia','🏴󠁧󠁢󠁳󠁣󠁴󠁿']],
-  'D': [['EE.UU.','🇺🇸'],['Turquía','🇹🇷'],['Australia','🇦🇺'],['Paraguay','🇵🇾']],
-  'E': [['Alemania','🇩🇪'],['C. de Marfil','🇨🇮'],['Ecuador','🇪🇨'],['Curazao','🇨🇼']],
-  'F': [['Países Bajos','🇳🇱'],['Japón','🇯🇵'],['Suecia','🇸🇪'],['Túnez','🇹🇳']],
+  'D': [['Usa','🇺🇸'],['Paraguay','🇵🇾'],['Australia','🇦🇺'],['Turquía','🇹🇷']],
+  'E': [['Alemania','🇩🇪'],['Costa de Marfíl','🇨🇮'],['Ecuador','🇪🇨'],['Curazao','🇨🇼']],
+  'F': [['Países bajos','🇳🇱'],['Japón','🇯🇵'],['Suecia','🇸🇪'],['Túnez','🇹🇳']],
   'G': [['Bélgica','🇧🇪'],['Egipto','🇪🇬'],['Irán','🇮🇷'],['Nueva Zelanda','🇳🇿']],
-  'H': [['España','🇪🇸'],['C. Verde','🇨🇻'],['Arabia S.','🇸🇦'],['Uruguay','🇺🇾']],
-  'I': [['Francia','🇫🇷'],['Senegal','🇸🇳'],['Irak','🇮🇶'],['Noruega','🇳🇴']],
+  'H': [['España','🇪🇸'],['Cabo verde','🇨🇻'],['Arabia S.','🇸🇦'],['Uruguay','🇺🇾']],
+  'I': [['Francia','🇫🇷'],['Senegal','🇸🇳'],['Irák','🇮🇶'],['Noruega','🇳🇴']],
   'J': [['Argentina','🇦🇷'],['Argelia','🇩🇿'],['Austria','🇦🇹'],['Jordania','🇯🇴']],
-  'K': [['Portugal','🇵🇹'],['RD Congo','🇨🇩'],['Uzbekistán','🇺🇿'],['Colombia','🇨🇴']],
+  'K': [['Portugal','🇵🇹'],['Congo','🇨🇩'],['Uzbekistán','🇺🇿'],['Col','🇨🇴']],
   'L': [['Inglaterra','🏴󠁧󠁢󠁥󠁮󠁧󠁿'],['Croacia','🇭🇷'],['Ghana','🇬🇭'],['Panamá','🇵🇦']],
 };
 
+
 function generarPartidosGrupos() {
   return [
-    {id:'G1', fase:'Grupos',grupo:'Grupo A',local:'México',localFlag:'🇲🇽',visitante:'Sudáfrica',visitanteFlag:'🇿🇦',fecha:'11/06 15:00',resultado:null},
-    {id:'G2', fase:'Grupos',grupo:'Grupo A',local:'Corea del Sur',localFlag:'🇰🇷',visitante:'Rep. Checa',visitanteFlag:'🇨🇿',fecha:'11/06 22:00',resultado:null},
-    {id:'G3', fase:'Grupos',grupo:'Grupo A',local:'Rep. Checa',localFlag:'🇨🇿',visitante:'Sudáfrica',visitanteFlag:'🇿🇦',fecha:'18/06 12:00',resultado:null},
-    {id:'G4', fase:'Grupos',grupo:'Grupo A',local:'México',localFlag:'🇲🇽',visitante:'Corea del Sur',visitanteFlag:'🇰🇷',fecha:'18/06 21:00',resultado:null},
-    {id:'G5', fase:'Grupos',grupo:'Grupo A',local:'Rep. Checa',localFlag:'🇨🇿',visitante:'México',visitanteFlag:'🇲🇽',fecha:'24/06 20:00',resultado:null},
-    {id:'G6', fase:'Grupos',grupo:'Grupo A',local:'Sudáfrica',localFlag:'🇿🇦',visitante:'Corea del Sur',visitanteFlag:'🇰🇷',fecha:'24/06 20:00',resultado:null},
-    {id:'G7', fase:'Grupos',grupo:'Grupo B',local:'Canadá',localFlag:'🇨🇦',visitante:'Bosnia y Herz.',visitanteFlag:'🇧🇦',fecha:'12/06 15:00',resultado:null},
-    {id:'G8', fase:'Grupos',grupo:'Grupo B',local:'Qatar',localFlag:'🇶🇦',visitante:'Suiza',visitanteFlag:'🇨🇭',fecha:'13/06 15:00',resultado:null},
-    {id:'G9', fase:'Grupos',grupo:'Grupo B',local:'Suiza',localFlag:'🇨🇭',visitante:'Bosnia y Herz.',visitanteFlag:'🇧🇦',fecha:'18/06 15:00',resultado:null},
-    {id:'G10',fase:'Grupos',grupo:'Grupo B',local:'Canadá',localFlag:'🇨🇦',visitante:'Qatar',visitanteFlag:'🇶🇦',fecha:'18/06 18:00',resultado:null},
-    {id:'G11',fase:'Grupos',grupo:'Grupo B',local:'Suiza',localFlag:'🇨🇭',visitante:'Canadá',visitanteFlag:'🇨🇦',fecha:'24/06 15:00',resultado:null},
-    {id:'G12',fase:'Grupos',grupo:'Grupo B',local:'Bosnia y Herz.',localFlag:'🇧🇦',visitante:'Qatar',visitanteFlag:'🇶🇦',fecha:'24/06 15:00',resultado:null},
-    {id:'G13',fase:'Grupos',grupo:'Grupo C',local:'Brasil',localFlag:'🇧🇷',visitante:'Marruecos',visitanteFlag:'🇲🇦',fecha:'13/06 18:00',resultado:null},
-    {id:'G14',fase:'Grupos',grupo:'Grupo C',local:'Haití',localFlag:'🇭🇹',visitante:'Escocia',visitanteFlag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',fecha:'13/06 21:00',resultado:null},
-    {id:'G15',fase:'Grupos',grupo:'Grupo C',local:'Escocia',localFlag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',visitante:'Marruecos',visitanteFlag:'🇲🇦',fecha:'19/06 18:00',resultado:null},
-    {id:'G16',fase:'Grupos',grupo:'Grupo C',local:'Brasil',localFlag:'🇧🇷',visitante:'Haití',visitanteFlag:'🇭🇹',fecha:'19/06 20:30',resultado:null},
-    {id:'G17',fase:'Grupos',grupo:'Grupo C',local:'Escocia',localFlag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',visitante:'Brasil',visitanteFlag:'🇧🇷',fecha:'24/06 18:00',resultado:null},
-    {id:'G18',fase:'Grupos',grupo:'Grupo C',local:'Marruecos',localFlag:'🇲🇦',visitante:'Haití',visitanteFlag:'🇭🇹',fecha:'24/06 18:00',resultado:null},
-    {id:'G19',fase:'Grupos',grupo:'Grupo D',local:'EE.UU.',localFlag:'🇺🇸',visitante:'Paraguay',visitanteFlag:'🇵🇾',fecha:'12/06 21:00',resultado:null},
-    {id:'G20',fase:'Grupos',grupo:'Grupo D',local:'Australia',localFlag:'🇦🇺',visitante:'Turquía',visitanteFlag:'🇹🇷',fecha:'14/06 00:00',resultado:null},
-    {id:'G21',fase:'Grupos',grupo:'Grupo D',local:'EE.UU.',localFlag:'🇺🇸',visitante:'Australia',visitanteFlag:'🇦🇺',fecha:'19/06 15:00',resultado:null},
-    {id:'G22',fase:'Grupos',grupo:'Grupo D',local:'Turquía',localFlag:'🇹🇷',visitante:'Paraguay',visitanteFlag:'🇵🇾',fecha:'19/06 23:00',resultado:null},
-    {id:'G23',fase:'Grupos',grupo:'Grupo D',local:'Turquía',localFlag:'🇹🇷',visitante:'EE.UU.',visitanteFlag:'🇺🇸',fecha:'25/06 22:00',resultado:null},
-    {id:'G24',fase:'Grupos',grupo:'Grupo D',local:'Paraguay',localFlag:'🇵🇾',visitante:'Australia',visitanteFlag:'🇦🇺',fecha:'25/06 22:00',resultado:null},
-    {id:'G25',fase:'Grupos',grupo:'Grupo E',local:'Alemania',localFlag:'🇩🇪',visitante:'Curazao',visitanteFlag:'🇨🇼',fecha:'14/06 13:00',resultado:null},
-    {id:'G26',fase:'Grupos',grupo:'Grupo E',local:'C. de Marfil',localFlag:'🇨🇮',visitante:'Ecuador',visitanteFlag:'🇪🇨',fecha:'14/06 19:00',resultado:null},
-    {id:'G27',fase:'Grupos',grupo:'Grupo E',local:'Alemania',localFlag:'🇩🇪',visitante:'C. de Marfil',visitanteFlag:'🇨🇮',fecha:'20/06 16:00',resultado:null},
-    {id:'G28',fase:'Grupos',grupo:'Grupo E',local:'Ecuador',localFlag:'🇪🇨',visitante:'Curazao',visitanteFlag:'🇨🇼',fecha:'20/06 20:00',resultado:null},
-    {id:'G29',fase:'Grupos',grupo:'Grupo E',local:'Curazao',localFlag:'🇨🇼',visitante:'C. de Marfil',visitanteFlag:'🇨🇮',fecha:'26/06 16:00',resultado:null},
-    {id:'G30',fase:'Grupos',grupo:'Grupo E',local:'Ecuador',localFlag:'🇪🇨',visitante:'Alemania',visitanteFlag:'🇩🇪',fecha:'26/06 16:00',resultado:null},
-    {id:'G31',fase:'Grupos',grupo:'Grupo F',local:'Países Bajos',localFlag:'🇳🇱',visitante:'Japón',visitanteFlag:'🇯🇵',fecha:'14/06 16:00',resultado:null},
-    {id:'G32',fase:'Grupos',grupo:'Grupo F',local:'Suecia',localFlag:'🇸🇪',visitante:'Túnez',visitanteFlag:'🇹🇳',fecha:'14/06 22:00',resultado:null},
-    {id:'G33',fase:'Grupos',grupo:'Grupo F',local:'Países Bajos',localFlag:'🇳🇱',visitante:'Suecia',visitanteFlag:'🇸🇪',fecha:'20/06 13:00',resultado:null},
-    {id:'G34',fase:'Grupos',grupo:'Grupo F',local:'Japón',localFlag:'🇯🇵',visitante:'Túnez',visitanteFlag:'🇹🇳',fecha:'20/06 00:00',resultado:null},
-    {id:'G35',fase:'Grupos',grupo:'Grupo F',local:'Japón',localFlag:'🇯🇵',visitante:'Suecia',visitanteFlag:'🇸🇪',fecha:'26/06 15:00',resultado:null},
-    {id:'G36',fase:'Grupos',grupo:'Grupo F',local:'Túnez',localFlag:'🇹🇳',visitante:'Países Bajos',visitanteFlag:'🇳🇱',fecha:'26/06 15:00',resultado:null},
-    {id:'G37',fase:'Grupos',grupo:'Grupo G',local:'Bélgica',localFlag:'🇧🇪',visitante:'Egipto',visitanteFlag:'🇪🇬',fecha:'15/06 17:00',resultado:null},
-    {id:'G38',fase:'Grupos',grupo:'Grupo G',local:'Irán',localFlag:'🇮🇷',visitante:'Nueva Zelanda',visitanteFlag:'🇳🇿',fecha:'15/06 21:00',resultado:null},
-    {id:'G39',fase:'Grupos',grupo:'Grupo G',local:'Bélgica',localFlag:'🇧🇪',visitante:'Irán',visitanteFlag:'🇮🇷',fecha:'21/06 15:00',resultado:null},
-    {id:'G40',fase:'Grupos',grupo:'Grupo G',local:'Egipto',localFlag:'🇪🇬',visitante:'Nueva Zelanda',visitanteFlag:'🇳🇿',fecha:'21/06 21:00',resultado:null},
-    {id:'G41',fase:'Grupos',grupo:'Grupo G',local:'Egipto',localFlag:'🇪🇬',visitante:'Irán',visitanteFlag:'🇮🇷',fecha:'27/06 20:00',resultado:null},
-    {id:'G42',fase:'Grupos',grupo:'Grupo G',local:'Nueva Zelanda',localFlag:'🇳🇿',visitante:'Bélgica',visitanteFlag:'🇧🇪',fecha:'27/06 20:00',resultado:null},
-    {id:'G43',fase:'Grupos',grupo:'Grupo H',local:'España',localFlag:'🇪🇸',visitante:'C. Verde',visitanteFlag:'🇨🇻',fecha:'15/06 12:00',resultado:null},
-    {id:'G44',fase:'Grupos',grupo:'Grupo H',local:'Arabia S.',localFlag:'🇸🇦',visitante:'Uruguay',visitanteFlag:'🇺🇾',fecha:'15/06 18:00',resultado:null},
-    {id:'G45',fase:'Grupos',grupo:'Grupo H',local:'España',localFlag:'🇪🇸',visitante:'Arabia S.',visitanteFlag:'🇸🇦',fecha:'21/06 12:00',resultado:null},
-    {id:'G46',fase:'Grupos',grupo:'Grupo H',local:'Uruguay',localFlag:'🇺🇾',visitante:'C. Verde',visitanteFlag:'🇨🇻',fecha:'21/06 18:00',resultado:null},
-    {id:'G47',fase:'Grupos',grupo:'Grupo H',local:'C. Verde',localFlag:'🇨🇻',visitante:'Arabia S.',visitanteFlag:'🇸🇦',fecha:'27/06 16:00',resultado:null},
-    {id:'G48',fase:'Grupos',grupo:'Grupo H',local:'Uruguay',localFlag:'🇺🇾',visitante:'España',visitanteFlag:'🇪🇸',fecha:'27/06 16:00',resultado:null},
-    {id:'G49',fase:'Grupos',grupo:'Grupo I',local:'Francia',localFlag:'🇫🇷',visitante:'Senegal',visitanteFlag:'🇸🇳',fecha:'16/06 15:00',resultado:null},
-    {id:'G50',fase:'Grupos',grupo:'Grupo I',local:'Irak',localFlag:'🇮🇶',visitante:'Noruega',visitanteFlag:'🇳🇴',fecha:'16/06 18:00',resultado:null},
-    {id:'G51',fase:'Grupos',grupo:'Grupo I',local:'Francia',localFlag:'🇫🇷',visitante:'Irak',visitanteFlag:'🇮🇶',fecha:'22/06 17:00',resultado:null},
-    {id:'G52',fase:'Grupos',grupo:'Grupo I',local:'Noruega',localFlag:'🇳🇴',visitante:'Senegal',visitanteFlag:'🇸🇳',fecha:'22/06 20:00',resultado:null},
-    {id:'G53',fase:'Grupos',grupo:'Grupo I',local:'Noruega',localFlag:'🇳🇴',visitante:'Francia',visitanteFlag:'🇫🇷',fecha:'28/06 15:00',resultado:null},
-    {id:'G54',fase:'Grupos',grupo:'Grupo I',local:'Senegal',localFlag:'🇸🇳',visitante:'Irak',visitanteFlag:'🇮🇶',fecha:'28/06 15:00',resultado:null},
-    {id:'G55',fase:'Grupos',grupo:'Grupo J',local:'Argentina',localFlag:'🇦🇷',visitante:'Argelia',visitanteFlag:'🇩🇿',fecha:'16/06 21:00',resultado:null},
-    {id:'G56',fase:'Grupos',grupo:'Grupo J',local:'Austria',localFlag:'🇦🇹',visitante:'Jordania',visitanteFlag:'🇯🇴',fecha:'16/06 00:00',resultado:null},
-    {id:'G57',fase:'Grupos',grupo:'Grupo J',local:'Argentina',localFlag:'🇦🇷',visitante:'Austria',visitanteFlag:'🇦🇹',fecha:'22/06 13:00',resultado:null},
-    {id:'G58',fase:'Grupos',grupo:'Grupo J',local:'Jordania',localFlag:'🇯🇴',visitante:'Argelia',visitanteFlag:'🇩🇿',fecha:'21/06 23:00',resultado:null},
-    {id:'G59',fase:'Grupos',grupo:'Grupo J',local:'Argelia',localFlag:'🇩🇿',visitante:'Austria',visitanteFlag:'🇦🇹',fecha:'28/06 19:00',resultado:null},
-    {id:'G60',fase:'Grupos',grupo:'Grupo J',local:'Jordania',localFlag:'🇯🇴',visitante:'Argentina',visitanteFlag:'🇦🇷',fecha:'28/06 19:00',resultado:null},
-    {id:'G61',fase:'Grupos',grupo:'Grupo K',local:'Portugal',localFlag:'🇵🇹',visitante:'RD Congo',visitanteFlag:'🇨🇩',fecha:'17/06 13:00',resultado:null},
-    {id:'G62',fase:'Grupos',grupo:'Grupo K',local:'Uzbekistán',localFlag:'🇺🇿',visitante:'Colombia',visitanteFlag:'🇨🇴',fecha:'17/06 22:00',resultado:null},
-    {id:'G63',fase:'Grupos',grupo:'Grupo K',local:'Portugal',localFlag:'🇵🇹',visitante:'Uzbekistán',visitanteFlag:'🇺🇿',fecha:'23/06 13:00',resultado:null},
-    {id:'G64',fase:'Grupos',grupo:'Grupo K',local:'RD Congo',localFlag:'🇨🇩',visitante:'Colombia',visitanteFlag:'🇨🇴',fecha:'23/06 22:00',resultado:null},
-    {id:'G65',fase:'Grupos',grupo:'Grupo K',local:'Colombia',localFlag:'🇨🇴',visitante:'Portugal',visitanteFlag:'🇵🇹',fecha:'29/06 19:30',resultado:null},
-    {id:'G66',fase:'Grupos',grupo:'Grupo K',local:'RD Congo',localFlag:'🇨🇩',visitante:'Uzbekistán',visitanteFlag:'🇺🇿',fecha:'29/06 19:30',resultado:null},
-    {id:'G67',fase:'Grupos',grupo:'Grupo L',local:'Inglaterra',localFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',visitante:'Croacia',visitanteFlag:'🇭🇷',fecha:'17/06 16:00',resultado:null},
-    {id:'G68',fase:'Grupos',grupo:'Grupo L',local:'Ghana',localFlag:'🇬🇭',visitante:'Panamá',visitanteFlag:'🇵🇦',fecha:'17/06 19:00',resultado:null},
-    {id:'G69',fase:'Grupos',grupo:'Grupo L',local:'Inglaterra',localFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',visitante:'Ghana',visitanteFlag:'🇬🇭',fecha:'23/06 16:00',resultado:null},
-    {id:'G70',fase:'Grupos',grupo:'Grupo L',local:'Croacia',localFlag:'🇭🇷',visitante:'Panamá',visitanteFlag:'🇵🇦',fecha:'23/06 19:00',resultado:null},
-    {id:'G71',fase:'Grupos',grupo:'Grupo L',local:'Croacia',localFlag:'🇭🇷',visitante:'Ghana',visitanteFlag:'🇬🇭',fecha:'29/06 17:00',resultado:null},
-    {id:'G72',fase:'Grupos',grupo:'Grupo L',local:'Panamá',localFlag:'🇵🇦',visitante:'Inglaterra',visitanteFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',fecha:'29/06 17:00',resultado:null},
+    {id:'G1',fase:'Grupos',grupo:'Grupo A',local:'México',localFlag:'🇲🇽',visitante:'Sud Africa',visitanteFlag:'🇿🇦',fecha:'11/06 15 hrs',resultado:null},
+    {id:'G2',fase:'Grupos',grupo:'Grupo A',local:'Corea',localFlag:'🇰🇷',visitante:'R. Checa',visitanteFlag:'🇨🇿',fecha:'11/06 22 hrs',resultado:null},
+    {id:'G3',fase:'Grupos',grupo:'Grupo A',local:'R. Checa',localFlag:'🇨🇿',visitante:'Sud Africa',visitanteFlag:'🇿🇦',fecha:'18/06 12 hrs',resultado:null},
+    {id:'G4',fase:'Grupos',grupo:'Grupo A',local:'México',localFlag:'🇲🇽',visitante:'Corea',visitanteFlag:'🇰🇷',fecha:'18/06 21 hrs',resultado:null},
+    {id:'G5',fase:'Grupos',grupo:'Grupo A',local:'R. Checa',localFlag:'🇨🇿',visitante:'México',visitanteFlag:'🇲🇽',fecha:'24/06 21 hrs',resultado:null},
+    {id:'G6',fase:'Grupos',grupo:'Grupo A',local:'Sud Africa',localFlag:'🇿🇦',visitante:'Corea',visitanteFlag:'🇰🇷',fecha:'24/06 21 hrs',resultado:null},
+    {id:'G7',fase:'Grupos',grupo:'Grupo B',local:'Canadá',localFlag:'🇨🇦',visitante:'Bosnia',visitanteFlag:'🇧🇦',fecha:'12/06 15 hrs',resultado:null},
+    {id:'G8',fase:'Grupos',grupo:'Grupo B',local:'Qatar',localFlag:'🇶🇦',visitante:'Suiza',visitanteFlag:'🇨🇭',fecha:'13/06 15 hrs',resultado:null},
+    {id:'G9',fase:'Grupos',grupo:'Grupo B',local:'Suiza',localFlag:'🇨🇭',visitante:'Bosnia',visitanteFlag:'🇧🇦',fecha:'18/06 15 hrs',resultado:null},
+    {id:'G10',fase:'Grupos',grupo:'Grupo B',local:'Canadá',localFlag:'🇨🇦',visitante:'Qatar',visitanteFlag:'🇶🇦',fecha:'18/06 18 hrs',resultado:null},
+    {id:'G11',fase:'Grupos',grupo:'Grupo B',local:'Suiza',localFlag:'🇨🇭',visitante:'Canadá',visitanteFlag:'🇨🇦',fecha:'24/06 15 hrs',resultado:null},
+    {id:'G12',fase:'Grupos',grupo:'Grupo B',local:'Bosnia',localFlag:'🇧🇦',visitante:'Qatar',visitanteFlag:'🇶🇦',fecha:'24/06 15 hrs',resultado:null},
+    {id:'G13',fase:'Grupos',grupo:'Grupo C',local:'Brasil',localFlag:'🇧🇷',visitante:'Marruecos',visitanteFlag:'🇲🇦',fecha:'13/06 18 hrs',resultado:null},
+    {id:'G14',fase:'Grupos',grupo:'Grupo C',local:'Haití',localFlag:'🇭🇹',visitante:'Escocia',visitanteFlag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',fecha:'13/06 21 hrs',resultado:null},
+    {id:'G15',fase:'Grupos',grupo:'Grupo C',local:'Escocia',localFlag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',visitante:'Marruecos',visitanteFlag:'🇲🇦',fecha:'19/06 18 hrs',resultado:null},
+    {id:'G16',fase:'Grupos',grupo:'Grupo C',local:'Brasil',localFlag:'🇧🇷',visitante:'Haití',visitanteFlag:'🇭🇹',fecha:'19/06 20:30 hrs',resultado:null},
+    {id:'G17',fase:'Grupos',grupo:'Grupo C',local:'Escocia',localFlag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿',visitante:'Brasil',visitanteFlag:'🇧🇷',fecha:'24/06 18 hrs',resultado:null},
+    {id:'G18',fase:'Grupos',grupo:'Grupo C',local:'Marruecos',localFlag:'🇲🇦',visitante:'Haití',visitanteFlag:'🇭🇹',fecha:'24/06 18 hrs',resultado:null},
+    {id:'G19',fase:'Grupos',grupo:'Grupo D',local:'Usa',localFlag:'🇺🇸',visitante:'Paraguay',visitanteFlag:'🇵🇾',fecha:'12/06 21 hrs',resultado:null},
+    {id:'G20',fase:'Grupos',grupo:'Grupo D',local:'Australia',localFlag:'🇦🇺',visitante:'Turquía',visitanteFlag:'🇹🇷',fecha:'14/06 00 hrs',resultado:null},
+    {id:'G21',fase:'Grupos',grupo:'Grupo D',local:'Usa',localFlag:'🇺🇸',visitante:'Australia',visitanteFlag:'🇦🇺',fecha:'19/06 15 hrs',resultado:null},
+    {id:'G22',fase:'Grupos',grupo:'Grupo D',local:'Turquía',localFlag:'🇹🇷',visitante:'Paraguay',visitanteFlag:'🇵🇾',fecha:'19/06 23 hrs',resultado:null},
+    {id:'G23',fase:'Grupos',grupo:'Grupo D',local:'Turquía',localFlag:'🇹🇷',visitante:'Usa',visitanteFlag:'🇺🇸',fecha:'25/06 22 hrs',resultado:null},
+    {id:'G24',fase:'Grupos',grupo:'Grupo D',local:'Paraguay',localFlag:'🇵🇾',visitante:'Australia',visitanteFlag:'🇦🇺',fecha:'25/06 22 hrs',resultado:null},
+    {id:'G25',fase:'Grupos',grupo:'Grupo E',local:'Alemania',localFlag:'🇩🇪',visitante:'Curazao',visitanteFlag:'🇨🇼',fecha:'14/06 13 hrs',resultado:null},
+    {id:'G26',fase:'Grupos',grupo:'Grupo E',local:'Costa de Marfíl',localFlag:'🇨🇮',visitante:'Ecuador',visitanteFlag:'🇪🇨',fecha:'14/06 19 hrs',resultado:null},
+    {id:'G27',fase:'Grupos',grupo:'Grupo E',local:'Alemania',localFlag:'🇩🇪',visitante:'Costa de Marfíl',visitanteFlag:'🇨🇮',fecha:'20/06 16 hrs',resultado:null},
+    {id:'G28',fase:'Grupos',grupo:'Grupo E',local:'Ecuador',localFlag:'🇪🇨',visitante:'Curazao',visitanteFlag:'🇨🇼',fecha:'20/06 20 hrs',resultado:null},
+    {id:'G29',fase:'Grupos',grupo:'Grupo E',local:'Curazao',localFlag:'🇨🇼',visitante:'Costa de Marfíl',visitanteFlag:'🇨🇮',fecha:'25/06 16 hrs',resultado:null},
+    {id:'G30',fase:'Grupos',grupo:'Grupo E',local:'Ecuador',localFlag:'🇪🇨',visitante:'Alemania',visitanteFlag:'🇩🇪',fecha:'25/06 16 hrs',resultado:null},
+    {id:'G31',fase:'Grupos',grupo:'Grupo F',local:'Países bajos',localFlag:'🇳🇱',visitante:'Japón',visitanteFlag:'🇯🇵',fecha:'14/06 16 hrs',resultado:null},
+    {id:'G32',fase:'Grupos',grupo:'Grupo F',local:'Suecia',localFlag:'🇸🇪',visitante:'Túnez',visitanteFlag:'🇹🇳',fecha:'14/06 22 hrs',resultado:null},
+    {id:'G33',fase:'Grupos',grupo:'Grupo F',local:'Países bajos',localFlag:'🇳🇱',visitante:'Suecia',visitanteFlag:'🇸🇪',fecha:'20/06 13 hrs',resultado:null},
+    {id:'G34',fase:'Grupos',grupo:'Grupo F',local:'Túnez',localFlag:'🇹🇳',visitante:'Japón',visitanteFlag:'🇯🇵',fecha:'21/06 00 hrs',resultado:null},
+    {id:'G35',fase:'Grupos',grupo:'Grupo F',local:'Japón',localFlag:'🇯🇵',visitante:'Suecia',visitanteFlag:'🇸🇪',fecha:'25/06 19 hrs',resultado:null},
+    {id:'G36',fase:'Grupos',grupo:'Grupo F',local:'Túnez',localFlag:'🇹🇳',visitante:'Países bajos',visitanteFlag:'🇳🇱',fecha:'25/06 19 hrs',resultado:null},
+    {id:'G37',fase:'Grupos',grupo:'Grupo G',local:'Bélgica',localFlag:'🇧🇪',visitante:'Egipto',visitanteFlag:'🇪🇬',fecha:'15/06 15 hrs',resultado:null},
+    {id:'G38',fase:'Grupos',grupo:'Grupo G',local:'Irán',localFlag:'🇮🇷',visitante:'Nueva Zelanda',visitanteFlag:'🇳🇿',fecha:'15/06 21 hrs',resultado:null},
+    {id:'G39',fase:'Grupos',grupo:'Grupo G',local:'Bélgica',localFlag:'🇧🇪',visitante:'Irán',visitanteFlag:'🇮🇷',fecha:'21/06 15 hrs',resultado:null},
+    {id:'G40',fase:'Grupos',grupo:'Grupo G',local:'Nueva Zelanda',localFlag:'🇳🇿',visitante:'Egipto',visitanteFlag:'🇪🇬',fecha:'21/06 21 hrs',resultado:null},
+    {id:'G41',fase:'Grupos',grupo:'Grupo G',local:'Egipto',localFlag:'🇪🇬',visitante:'Irán',visitanteFlag:'🇮🇷',fecha:'26/06 23 hrs',resultado:null},
+    {id:'G42',fase:'Grupos',grupo:'Grupo G',local:'Nueva Zelanda',localFlag:'🇳🇿',visitante:'Bélgica',visitanteFlag:'🇧🇪',fecha:'26/06 23 hrs',resultado:null},
+    {id:'G43',fase:'Grupos',grupo:'Grupo H',local:'España',localFlag:'🇪🇸',visitante:'Cabo verde',visitanteFlag:'🇨🇻',fecha:'15/06 12 hrs',resultado:null},
+    {id:'G44',fase:'Grupos',grupo:'Grupo H',local:'Arabia S.',localFlag:'🇸🇦',visitante:'Uruguay',visitanteFlag:'🇺🇾',fecha:'15/06 18 hrs',resultado:null},
+    {id:'G45',fase:'Grupos',grupo:'Grupo H',local:'España',localFlag:'🇪🇸',visitante:'Arabia S.',visitanteFlag:'🇸🇦',fecha:'21/06 12 hrs',resultado:null},
+    {id:'G46',fase:'Grupos',grupo:'Grupo H',local:'Uruguay',localFlag:'🇺🇾',visitante:'Cabo verde',visitanteFlag:'🇨🇻',fecha:'21/06 18 hrs',resultado:null},
+    {id:'G47',fase:'Grupos',grupo:'Grupo H',local:'Cabo verde',localFlag:'🇨🇻',visitante:'Arabia S.',visitanteFlag:'🇸🇦',fecha:'26/06 20 hrs',resultado:null},
+    {id:'G48',fase:'Grupos',grupo:'Grupo H',local:'Uruguay',localFlag:'🇺🇾',visitante:'España',visitanteFlag:'🇪🇸',fecha:'26/06 20 hrs',resultado:null},
+    {id:'G49',fase:'Grupos',grupo:'Grupo I',local:'Francia',localFlag:'🇫🇷',visitante:'Senegal',visitanteFlag:'🇸🇳',fecha:'16/06 15 hrs',resultado:null},
+    {id:'G50',fase:'Grupos',grupo:'Grupo I',local:'Irák',localFlag:'🇮🇶',visitante:'Noruega',visitanteFlag:'🇳🇴',fecha:'16/06 18 hrs',resultado:null},
+    {id:'G51',fase:'Grupos',grupo:'Grupo I',local:'Francia',localFlag:'🇫🇷',visitante:'Irák',visitanteFlag:'🇮🇶',fecha:'22/06 17 hrs',resultado:null},
+    {id:'G52',fase:'Grupos',grupo:'Grupo I',local:'Noruega',localFlag:'🇳🇴',visitante:'Senegal',visitanteFlag:'🇸🇳',fecha:'22/06 20 hrs',resultado:null},
+    {id:'G53',fase:'Grupos',grupo:'Grupo I',local:'Noruega',localFlag:'🇳🇴',visitante:'Francia',visitanteFlag:'🇫🇷',fecha:'26/06 15 hrs',resultado:null},
+    {id:'G54',fase:'Grupos',grupo:'Grupo I',local:'Senegal',localFlag:'🇸🇳',visitante:'Irák',visitanteFlag:'🇮🇶',fecha:'26/06 15 hrs',resultado:null},
+    {id:'G55',fase:'Grupos',grupo:'Grupo J',local:'Argentina',localFlag:'🇦🇷',visitante:'Argelia',visitanteFlag:'🇩🇿',fecha:'16/06 21 hrs',resultado:null},
+    {id:'G56',fase:'Grupos',grupo:'Grupo J',local:'Austria',localFlag:'🇦🇹',visitante:'Jordania',visitanteFlag:'🇯🇴',fecha:'17/06 00 hrs',resultado:null},
+    {id:'G57',fase:'Grupos',grupo:'Grupo J',local:'Argentina',localFlag:'🇦🇷',visitante:'Austria',visitanteFlag:'🇦🇹',fecha:'22/06 13 hrs',resultado:null},
+    {id:'G58',fase:'Grupos',grupo:'Grupo J',local:'Jordania',localFlag:'🇯🇴',visitante:'Argelia',visitanteFlag:'🇩🇿',fecha:'22/06 23 hrs',resultado:null},
+    {id:'G59',fase:'Grupos',grupo:'Grupo J',local:'Argelia',localFlag:'🇩🇿',visitante:'Austria',visitanteFlag:'🇦🇹',fecha:'27/06 22 hrs',resultado:null},
+    {id:'G60',fase:'Grupos',grupo:'Grupo J',local:'Jordania',localFlag:'🇯🇴',visitante:'Argentina',visitanteFlag:'🇦🇷',fecha:'27/06 22 hrs',resultado:null},
+    {id:'G61',fase:'Grupos',grupo:'Grupo K',local:'Portugal',localFlag:'🇵🇹',visitante:'Congo',visitanteFlag:'🇨🇩',fecha:'17/06 13 hrs',resultado:null},
+    {id:'G62',fase:'Grupos',grupo:'Grupo K',local:'Uzbekistán',localFlag:'🇺🇿',visitante:'Col',visitanteFlag:'🇨🇴',fecha:'17/06 22 hrs',resultado:null},
+    {id:'G63',fase:'Grupos',grupo:'Grupo K',local:'Portugal',localFlag:'🇵🇹',visitante:'Uzbekistán',visitanteFlag:'🇺🇿',fecha:'23/06 13 hrs',resultado:null},
+    {id:'G64',fase:'Grupos',grupo:'Grupo K',local:'Colombia',localFlag:'🇨🇴',visitante:'Congo',visitanteFlag:'🇨🇩',fecha:'23/06 22 hrs',resultado:null},
+    {id:'G65',fase:'Grupos',grupo:'Grupo K',local:'Colombia',localFlag:'🇨🇴',visitante:'Portugal',visitanteFlag:'🇵🇹',fecha:'27/06 19:30 hrs',resultado:null},
+    {id:'G66',fase:'Grupos',grupo:'Grupo K',local:'Congo',localFlag:'🇨🇩',visitante:'Uzbekistán',visitanteFlag:'🇺🇿',fecha:'27/06 19:30 hrs',resultado:null},
+    {id:'G67',fase:'Grupos',grupo:'Grupo L',local:'Inglaterra',localFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',visitante:'Croacia',visitanteFlag:'🇭🇷',fecha:'17/06 16 hrs',resultado:null},
+    {id:'G68',fase:'Grupos',grupo:'Grupo L',local:'Ghana',localFlag:'🇬🇭',visitante:'Panamá',visitanteFlag:'🇵🇦',fecha:'17/06 19 hrs',resultado:null},
+    {id:'G69',fase:'Grupos',grupo:'Grupo L',local:'Inglaterra',localFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',visitante:'Ghana',visitanteFlag:'🇬🇭',fecha:'23/06 16 hrs',resultado:null},
+    {id:'G70',fase:'Grupos',grupo:'Grupo L',local:'Panamá',localFlag:'🇵🇦',visitante:'Croacia',visitanteFlag:'🇭🇷',fecha:'23/06 19 hrs',resultado:null},
+    {id:'G71',fase:'Grupos',grupo:'Grupo L',local:'Panamá',localFlag:'🇵🇦',visitante:'Inglaterra',visitanteFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿',fecha:'27/06 17 hrs',resultado:null},
+    {id:'G72',fase:'Grupos',grupo:'Grupo L',local:'Croacia',localFlag:'🇭🇷',visitante:'Ghana',visitanteFlag:'🇬🇭',fecha:'27/06 17 hrs',resultado:null},
   ];
 }
 
@@ -1630,7 +1631,7 @@ function estadoDefault() {
     pronosticos: {},
     puntajes: {},
     especiales: {},
-    version: 3,
+    version: 5,
   };
 }
 
@@ -1639,7 +1640,7 @@ function cargarEstado() {
     const raw = localStorage.getItem('polla_mundial_2026');
     if (!raw) return estadoDefault();
     const parsed = JSON.parse(raw);
-    if (!parsed.partidos || parsed.version !== 3) {
+    if (!parsed.partidos || parsed.version !== 5) {
       const def = estadoDefault();
       def.jugadores = parsed.jugadores || [];
       def.pronosticos = parsed.pronosticos || {};
@@ -2395,77 +2396,28 @@ function compartirTablaWhatsApp() {
 
 
 // ── PRELOAD CRISTIANO ──
-// Sin PDF adjunto — se mantiene el pronóstico original pero con correcciones de orden
 (function() {
-  var pron_cristiano = {
-    'G1':{local:2,visitante:0},'G2':{local:1,visitante:1},'G3':{local:1,visitante:0},'G4':{local:2,visitante:1},'G5':{local:1,visitante:1},'G6':{local:1,visitante:1},
-    'G7':{local:2,visitante:0},'G8':{local:1,visitante:1},'G9':{local:2,visitante:1},'G10':{local:2,visitante:0},'G11':{local:1,visitante:1},'G12':{local:1,visitante:0},
-    // Grupo C: G15 era Brasil-Haiti(4-0) ahora es Escocia-Marr; G16 era Escocia-Marr(1-2) ahora es Brasil-Haiti
-    'G13':{local:3,visitante:1},'G14':{local:1,visitante:2},'G15':{local:1,visitante:2},'G16':{local:4,visitante:0},'G17':{local:1,visitante:2},'G18':{local:3,visitante:1},
-    // Grupo D: G19=USA-Par(2-2->orig G19 era USA-Tur), reordenado según PDF original no disponible — se mantiene el dato del preload original reordenado
-    // Original: G19=2-2(USA-Tur), G20=1-2(Aus-Par), G21=1-1(Tur-Par), G22=2-0(USA-Aus)
-    // Nuevo:    G19=USA-Par, G20=Aus-Tur, G21=USA-Aus, G22=Tur-Par
-    'G19':{local:2,visitante:2},'G20':{local:1,visitante:2},'G21':{local:2,visitante:0},'G22':{local:1,visitante:1},'G23':{local:1,visitante:2},'G24':{local:1,visitante:0},
-    'G25':{local:3,visitante:0},'G26':{local:1,visitante:1},'G27':{local:2,visitante:1},'G28':{local:2,visitante:0},
-    // G29=Cur-CMarfil, G30=Ecu-Ale (swap de G29/G30 originales)
-    'G29':{local:2,visitante:3},'G30':{local:0,visitante:1},
-    'G31':{local:2,visitante:1},'G32':{local:1,visitante:0},'G33':{local:1,visitante:1},'G34':{local:1,visitante:3},'G35':{local:2,visitante:1},'G36':{local:0,visitante:2},
-    'G37':{local:2,visitante:0},'G38':{local:1,visitante:0},'G39':{local:3,visitante:1},'G40':{local:1,visitante:1},'G41':{local:2,visitante:1},'G42':{local:0,visitante:2},
-    'G43':{local:3,visitante:0},'G44':{local:1,visitante:2},'G45':{local:2,visitante:0},
-    // G46=Uruguay-CaboVerde; original G46 era C.Verde-Uru(2-1), ahora es Uruguay-CVerde → invertir: local=1,visitante=2
-    'G46':{local:1,visitante:2},
-    'G47':{local:1,visitante:1},'G48':{local:2,visitante:3},
-    'G49':{local:2,visitante:0},'G50':{local:1,visitante:2},'G51':{local:3,visitante:0},'G52':{local:2,visitante:1},'G53':{local:1,visitante:1},'G54':{local:2,visitante:0},
-    'G55':{local:3,visitante:1},'G56':{local:1,visitante:1},'G57':{local:2,visitante:1},'G58':{local:1,visitante:1},'G59':{local:1,visitante:0},'G60':{local:0,visitante:4},
-    'G61':{local:2,visitante:0},'G62':{local:1,visitante:2},'G63':{local:2,visitante:1},'G64':{local:2,visitante:0},'G65':{local:1,visitante:2},'G66':{local:1,visitante:1},
-    'G67':{local:2,visitante:1},'G68':{local:2,visitante:0},'G69':{local:2,visitante:0},'G70':{local:1,visitante:1},'G71':{local:0,visitante:2},'G72':{local:1,visitante:2}
-  };
+  var pron_cristiano = {"G1": {"local": 2, "visitante": 0}, "G2": {"local": 1, "visitante": 1}, "G3": {"local": 1, "visitante": 0}, "G4": {"local": 2, "visitante": 1}, "G5": {"local": 1, "visitante": 1}, "G6": {"local": 1, "visitante": 1}, "G7": {"local": 2, "visitante": 0}, "G8": {"local": 1, "visitante": 1}, "G9": {"local": 2, "visitante": 1}, "G10": {"local": 2, "visitante": 0}, "G11": {"local": 1, "visitante": 1}, "G12": {"local": 1, "visitante": 0}, "G13": {"local": 3, "visitante": 1}, "G14": {"local": 1, "visitante": 2}, "G15": {"local": 1, "visitante": 2}, "G16": {"local": 4, "visitante": 0}, "G17": {"local": 1, "visitante": 2}, "G18": {"local": 3, "visitante": 1}, "G19": {"local": 2, "visitante": 2}, "G20": {"local": 1, "visitante": 2}, "G21": {"local": 2, "visitante": 0}, "G22": {"local": 1, "visitante": 1}, "G23": {"local": 1, "visitante": 2}, "G24": {"local": 1, "visitante": 0}, "G25": {"local": 3, "visitante": 0}, "G26": {"local": 1, "visitante": 1}, "G27": {"local": 2, "visitante": 1}, "G28": {"local": 2, "visitante": 0}, "G29": {"local": 0, "visitante": 1}, "G30": {"local": 2, "visitante": 3}, "G31": {"local": 2, "visitante": 1}, "G32": {"local": 1, "visitante": 0}, "G33": {"local": 1, "visitante": 1}, "G34": {"local": 1, "visitante": 3}, "G35": {"local": 2, "visitante": 1}, "G36": {"local": 0, "visitante": 2}, "G37": {"local": 2, "visitante": 0}, "G38": {"local": 1, "visitante": 0}, "G39": {"local": 3, "visitante": 1}, "G40": {"local": 1, "visitante": 1}, "G41": {"local": 2, "visitante": 1}, "G42": {"local": 0, "visitante": 2}, "G43": {"local": 3, "visitante": 0}, "G44": {"local": 1, "visitante": 2}, "G45": {"local": 2, "visitante": 0}, "G46": {"local": 2, "visitante": 1}, "G47": {"local": 1, "visitante": 1}, "G48": {"local": 2, "visitante": 3}, "G49": {"local": 2, "visitante": 0}, "G50": {"local": 1, "visitante": 2}, "G51": {"local": 3, "visitante": 0}, "G52": {"local": 2, "visitante": 1}, "G53": {"local": 1, "visitante": 1}, "G54": {"local": 2, "visitante": 0}, "G55": {"local": 3, "visitante": 1}, "G56": {"local": 1, "visitante": 1}, "G57": {"local": 2, "visitante": 1}, "G58": {"local": 1, "visitante": 1}, "G59": {"local": 1, "visitante": 0}, "G60": {"local": 0, "visitante": 4}, "G61": {"local": 2, "visitante": 0}, "G62": {"local": 1, "visitante": 2}, "G63": {"local": 2, "visitante": 1}, "G64": {"local": 2, "visitante": 0}, "G65": {"local": 1, "visitante": 2}, "G66": {"local": 1, "visitante": 1}, "G67": {"local": 2, "visitante": 1}, "G68": {"local": 2, "visitante": 0}, "G69": {"local": 2, "visitante": 0}, "G70": {"local": 1, "visitante": 1}, "G71": {"local": 0, "visitante": 2}, "G72": {"local": 1, "visitante": 2}};
   var jugador = estado.jugadores.find(function(j){ return j.nombre.toLowerCase() === 'cristiano'; });
   if (!jugador) {
     jugador = {id:'j_auto_cristiano', nombre:'Cristiano', especiales:{campeon:'',subcampeon:'',goleador:'',semifinalistas:[]}};
     estado.jugadores.push(jugador);
   }
-  if (!estado.pronosticos[jugador.id]) estado.pronosticos[jugador.id] = {};
-  Object.assign(estado.pronosticos[jugador.id], pron_cristiano);
-  jugador.especiales = {campeon:'Brasil',subcampeon:'Espa\u00f1a',goleador:'Mbappe',semifinalistas:['Espa\u00f1a','Francia','Brasil','Argentina']};
-})();
+  estado.pronosticos[jugador.id] = pron_cristiano;
+  jugador.especiales = {campeon:'Brasil',subcampeon:'España',goleador:'Mbappe',semifinalistas:["Espa\u00f1a", "Francia", "Brasil", "Argentina"]};
+})();;
 
 // ── PRELOAD MILO ──
 (function() {
-  // PDF Milo: G15=Esco-Marr(1-2), G16=Brasil-Haiti(5-0)
-  // G19=USA-Par(1-2), G20=Aus-Tur(0-2), G21=USA-Aus(3-0), G22=Tur-Par(1-1)
-  // G29=Cur-CMarfil(0-2), G30=Ecu-Ale(2-2)
-  // G46=Uru-CVerde(3-0)
-  var pron_milo = {
-    'G1':{local:2,visitante:0},'G2':{local:1,visitante:1},'G3':{local:1,visitante:1},'G4':{local:2,visitante:1},'G5':{local:1,visitante:1},'G6':{local:0,visitante:2},
-    'G7':{local:2,visitante:2},'G8':{local:0,visitante:1},'G9':{local:2,visitante:1},'G10':{local:1,visitante:1},'G11':{local:1,visitante:0},'G12':{local:2,visitante:1},
-    // Grupo C: G15=Esco-Marr(1-2), G16=Brasil-Haiti(5-0)
-    'G13':{local:3,visitante:1},'G14':{local:0,visitante:2},'G15':{local:1,visitante:2},'G16':{local:5,visitante:0},'G17':{local:0,visitante:3},'G18':{local:3,visitante:0},
-    // Grupo D: G19=USA-Par(1-2), G20=Aus-Tur(0-2), G21=USA-Aus(3-0), G22=Tur-Par(1-1)
-    'G19':{local:1,visitante:2},'G20':{local:0,visitante:2},'G21':{local:3,visitante:0},'G22':{local:1,visitante:1},'G23':{local:1,visitante:1},'G24':{local:2,visitante:0},
-    'G25':{local:6,visitante:0},'G26':{local:1,visitante:3},'G27':{local:3,visitante:0},'G28':{local:3,visitante:0},
-    // G29=Cur-CMarfil(0-2), G30=Ecu-Ale(2-2)
-    'G29':{local:0,visitante:2},'G30':{local:2,visitante:2},
-    'G31':{local:1,visitante:1},'G32':{local:1,visitante:1},'G33':{local:1,visitante:2},'G34':{local:1,visitante:2},'G35':{local:2,visitante:0},'G36':{local:0,visitante:2},
-    'G37':{local:2,visitante:1},'G38':{local:3,visitante:1},'G39':{local:2,visitante:2},'G40':{local:0,visitante:2},'G41':{local:1,visitante:1},'G42':{local:0,visitante:3},
-    'G43':{local:7,visitante:0},'G44':{local:1,visitante:2},'G45':{local:3,visitante:0},
-    // G46=Uruguay-CaboVerde(3-0)
-    'G46':{local:3,visitante:0},
-    'G47':{local:0,visitante:2},'G48':{local:1,visitante:2},
-    'G49':{local:2,visitante:0},'G50':{local:1,visitante:3},'G51':{local:3,visitante:0},'G52':{local:2,visitante:1},'G53':{local:1,visitante:2},'G54':{local:1,visitante:0},
-    'G55':{local:3,visitante:1},'G56':{local:2,visitante:0},'G57':{local:2,visitante:0},'G58':{local:0,visitante:2},'G59':{local:2,visitante:2},'G60':{local:0,visitante:4},
-    'G61':{local:3,visitante:0},'G62':{local:0,visitante:2},'G63':{local:3,visitante:0},'G64':{local:1,visitante:1},'G65':{local:0,visitante:2},'G66':{local:0,visitante:0},
-    'G67':{local:1,visitante:2},'G68':{local:1,visitante:1},'G69':{local:3,visitante:0},'G70':{local:0,visitante:4},'G71':{local:0,visitante:2},'G72':{local:3,visitante:1}
-  };
+  var pron_milo = {"G1": {"local": 2, "visitante": 0}, "G2": {"local": 1, "visitante": 1}, "G3": {"local": 1, "visitante": 1}, "G4": {"local": 2, "visitante": 1}, "G5": {"local": 1, "visitante": 1}, "G6": {"local": 0, "visitante": 2}, "G7": {"local": 2, "visitante": 2}, "G8": {"local": 0, "visitante": 1}, "G9": {"local": 2, "visitante": 1}, "G10": {"local": 1, "visitante": 1}, "G11": {"local": 1, "visitante": 0}, "G12": {"local": 2, "visitante": 1}, "G13": {"local": 3, "visitante": 1}, "G14": {"local": 0, "visitante": 2}, "G15": {"local": 1, "visitante": 2}, "G16": {"local": 5, "visitante": 0}, "G17": {"local": 0, "visitante": 3}, "G18": {"local": 3, "visitante": 0}, "G19": {"local": 1, "visitante": 2}, "G20": {"local": 0, "visitante": 2}, "G21": {"local": 3, "visitante": 0}, "G22": {"local": 1, "visitante": 1}, "G23": {"local": 1, "visitante": 1}, "G24": {"local": 2, "visitante": 0}, "G25": {"local": 6, "visitante": 0}, "G26": {"local": 1, "visitante": 3}, "G27": {"local": 3, "visitante": 0}, "G28": {"local": 3, "visitante": 0}, "G29": {"local": 0, "visitante": 2}, "G30": {"local": 2, "visitante": 2}, "G31": {"local": 1, "visitante": 1}, "G32": {"local": 1, "visitante": 1}, "G33": {"local": 1, "visitante": 2}, "G34": {"local": 1, "visitante": 2}, "G35": {"local": 2, "visitante": 0}, "G36": {"local": 0, "visitante": 2}, "G37": {"local": 2, "visitante": 1}, "G38": {"local": 3, "visitante": 1}, "G39": {"local": 2, "visitante": 2}, "G40": {"local": 0, "visitante": 2}, "G41": {"local": 1, "visitante": 1}, "G42": {"local": 0, "visitante": 3}, "G43": {"local": 7, "visitante": 0}, "G44": {"local": 1, "visitante": 2}, "G45": {"local": 3, "visitante": 0}, "G46": {"local": 3, "visitante": 0}, "G47": {"local": 0, "visitante": 2}, "G48": {"local": 1, "visitante": 2}, "G49": {"local": 2, "visitante": 0}, "G50": {"local": 1, "visitante": 3}, "G51": {"local": 3, "visitante": 0}, "G52": {"local": 2, "visitante": 1}, "G53": {"local": 1, "visitante": 2}, "G54": {"local": 1, "visitante": 0}, "G55": {"local": 3, "visitante": 1}, "G56": {"local": 2, "visitante": 0}, "G57": {"local": 2, "visitante": 0}, "G58": {"local": 0, "visitante": 2}, "G59": {"local": 2, "visitante": 2}, "G60": {"local": 0, "visitante": 4}, "G61": {"local": 3, "visitante": 0}, "G62": {"local": 0, "visitante": 2}, "G63": {"local": 3, "visitante": 0}, "G64": {"local": 1, "visitante": 1}, "G65": {"local": 0, "visitante": 2}, "G66": {"local": 0, "visitante": 0}, "G67": {"local": 1, "visitante": 2}, "G68": {"local": 1, "visitante": 1}, "G69": {"local": 3, "visitante": 0}, "G70": {"local": 0, "visitante": 4}, "G71": {"local": 0, "visitante": 2}, "G72": {"local": 3, "visitante": 1}};
   var jugador = estado.jugadores.find(function(j){ return j.nombre.toLowerCase() === 'milo'; });
   if (!jugador) {
     jugador = {id:'j_auto_milo', nombre:'Milo', especiales:{campeon:'',subcampeon:'',goleador:'',semifinalistas:[]}};
     estado.jugadores.push(jugador);
   }
-  if (!estado.pronosticos[jugador.id]) estado.pronosticos[jugador.id] = {};
-  Object.assign(estado.pronosticos[jugador.id], pron_milo);
-  jugador.especiales = {campeon:'Argentina',subcampeon:'Espa\u00f1a',goleador:'Nico Williams',semifinalistas:['Argentina','Espa\u00f1a','Croacia','Inglaterra']};
-})();
+  estado.pronosticos[jugador.id] = pron_milo;
+  jugador.especiales = {campeon:'Argentina',subcampeon:'España',goleador:'Nico williams',semifinalistas:["Argentina", "Espa\u00f1a", "Croacia", "Inglaterra"]};
+})();;
 
 // ── PRELOAD PABLINHO ──
 (function() {
@@ -2547,16 +2499,15 @@ function compartirTablaWhatsApp() {
 
 // ── PRELOAD HERNO ──
 (function() {
-  var pron_herno = {'G1':{local:1,visitante:2},'G2':{local:3,visitante:2},'G3':{local:1,visitante:0},'G4':{local:2,visitante:0},'G5':{local:3,visitante:0},'G6':{local:1,visitante:1},'G7':{local:2,visitante:2},'G8':{local:0,visitante:2},'G9':{local:0,visitante:0},'G10':{local:0,visitante:2},'G11':{local:1,visitante:2},'G12':{local:1,visitante:1},'G13':{local:3,visitante:1},'G14':{local:2,visitante:1},'G15':{local:0,visitante:2},'G16':{local:0,visitante:2},'G17':{local:1,visitante:4},'G18':{local:1,visitante:2},'G19':{local:1,visitante:1},'G20':{local:1,visitante:2},'G21':{local:2,visitante:2},'G22':{local:1,visitante:2},'G23':{local:0,visitante:1},'G24':{local:1,visitante:0},'G25':{local:2,visitante:0},'G26':{local:2,visitante:2},'G27':{local:6,visitante:0},'G28':{local:0,visitante:1},'G29':{local:2,visitante:1},'G30':{local:3,visitante:0},'G31':{local:2,visitante:1},'G32':{local:3,visitante:1},'G33':{local:0,visitante:1},'G34':{local:1,visitante:2},'G35':{local:1,visitante:2},'G36':{local:1,visitante:3},'G37':{local:3,visitante:0},'G38':{local:2,visitante:0},'G39':{local:2,visitante:0},'G40':{local:0,visitante:0},'G41':{local:3,visitante:3},'G42':{local:0,visitante:1},'G43':{local:3,visitante:2},'G44':{local:3,visitante:1},'G45':{local:5,visitante:0},'G46':{local:0,visitante:1},'G47':{local:3,visitante:2},'G48':{local:2,visitante:0},'G49':{local:2,visitante:1},'G50':{local:2,visitante:1},'G51':{local:3,visitante:0},'G52':{local:1,visitante:2},'G53':{local:2,visitante:2},'G54':{local:3,visitante:1},'G55':{local:2,visitante:1},'G56':{local:3,visitante:1},'G57':{local:3,visitante:2},'G58':{local:2,visitante:0},'G59':{local:1,visitante:2},'G60':{local:0,visitante:3},'G61':{local:2,visitante:1},'G62':{local:2,visitante:2},'G63':{local:3,visitante:0},'G64':{local:0,visitante:2},'G65':{local:1,visitante:1},'G66':{local:2,visitante:0},'G67':{local:1,visitante:0},'G68':{local:2,visitante:1},'G69':{local:0,visitante:1},'G70':{local:2,visitante:0},'G71':{local:0,visitante:2},'G72':{local:1,visitante:3}};
+  var pron_herno = {"G1": {"local": 1, "visitante": 0}, "G2": {"local": 2, "visitante": 0}, "G3": {"local": 1, "visitante": 1}, "G4": {"local": 1, "visitante": 2}, "G5": {"local": 2, "visitante": 3}, "G6": {"local": 0, "visitante": 3}, "G7": {"local": 0, "visitante": 0}, "G8": {"local": 0, "visitante": 2}, "G9": {"local": 1, "visitante": 1}, "G10": {"local": 2, "visitante": 2}, "G11": {"local": 2, "visitante": 0}, "G12": {"local": 2, "visitante": 1}, "G13": {"local": 0, "visitante": 2}, "G14": {"local": 0, "visitante": 2}, "G15": {"local": 1, "visitante": 2}, "G16": {"local": 3, "visitante": 1}, "G17": {"local": 1, "visitante": 2}, "G18": {"local": 4, "visitante": 1}, "G19": {"local": 2, "visitante": 2}, "G20": {"local": 1, "visitante": 2}, "G21": {"local": 1, "visitante": 1}, "G22": {"local": 1, "visitante": 0}, "G23": {"local": 2, "visitante": 1}, "G24": {"local": 1, "visitante": 0}, "G25": {"local": 6, "visitante": 0}, "G26": {"local": 0, "visitante": 1}, "G27": {"local": 2, "visitante": 0}, "G28": {"local": 3, "visitante": 0}, "G29": {"local": 1, "visitante": 2}, "G30": {"local": 2, "visitante": 2}, "G31": {"local": 0, "visitante": 1}, "G32": {"local": 1, "visitante": 2}, "G33": {"local": 2, "visitante": 1}, "G34": {"local": 1, "visitante": 3}, "G35": {"local": 2, "visitante": 1}, "G36": {"local": 1, "visitante": 3}, "G37": {"local": 2, "visitante": 0}, "G38": {"local": 0, "visitante": 0}, "G39": {"local": 3, "visitante": 0}, "G40": {"local": 0, "visitante": 1}, "G41": {"local": 3, "visitante": 3}, "G42": {"local": 0, "visitante": 2}, "G43": {"local": 5, "visitante": 0}, "G44": {"local": 0, "visitante": 1}, "G45": {"local": 3, "visitante": 2}, "G46": {"local": 2, "visitante": 0}, "G47": {"local": 2, "visitante": 3}, "G48": {"local": 1, "visitante": 3}, "G49": {"local": 3, "visitante": 0}, "G50": {"local": 1, "visitante": 2}, "G51": {"local": 2, "visitante": 1}, "G52": {"local": 3, "visitante": 1}, "G53": {"local": 1, "visitante": 2}, "G54": {"local": 2, "visitante": 2}, "G55": {"local": 3, "visitante": 2}, "G56": {"local": 2, "visitante": 0}, "G57": {"local": 2, "visitante": 1}, "G58": {"local": 0, "visitante": 3}, "G59": {"local": 2, "visitante": 1}, "G60": {"local": 1, "visitante": 3}, "G61": {"local": 3, "visitante": 0}, "G62": {"local": 0, "visitante": 2}, "G63": {"local": 2, "visitante": 1}, "G64": {"local": 2, "visitante": 0}, "G65": {"local": 2, "visitante": 2}, "G66": {"local": 1, "visitante": 1}, "G67": {"local": 0, "visitante": 1}, "G68": {"local": 2, "visitante": 0}, "G69": {"local": 1, "visitante": 0}, "G70": {"local": 1, "visitante": 3}, "G71": {"local": 1, "visitante": 2}, "G72": {"local": 2, "visitante": 0}};
   var jugador = estado.jugadores.find(function(j){ return j.nombre.toLowerCase() === 'herno'; });
   if (!jugador) {
     jugador = {id:'j_auto_herno', nombre:'Herno', especiales:{campeon:'',subcampeon:'',goleador:'',semifinalistas:[]}};
     estado.jugadores.push(jugador);
   }
-  if (!estado.pronosticos[jugador.id]) estado.pronosticos[jugador.id] = {};
-  Object.assign(estado.pronosticos[jugador.id], pron_herno);
-  jugador.especiales = {campeon:'Francia',subcampeon:'Portugal',goleador:'Dembélé',semifinalistas:['Argentina','Francia','Portugal','Turquía']};
-})();
+  estado.pronosticos[jugador.id] = pron_herno;
+  jugador.especiales = {campeon:'Francia',subcampeon:'Portugal',goleador:'Dembélé',semifinalistas:["Argentina", "Francia", "Portugal", "Turqu\u00eda"]};
+})();;
 recalcularPuntajes();
 renderInicio();
 iniciarAutoUpdate();
