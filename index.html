@@ -1732,9 +1732,9 @@ function guardarEstado() {
 // Mapa de nombres API → nombres en el estado
 const TEAM_NAME_MAP = {
   // Grupo A
-  'mexico': 'México', 'south africa': 'Sudáfrica',
-  'south korea': 'Corea del Sur', 'korea republic': 'Corea del Sur',
-  'czech republic': 'Rep. Checa', 'czechia': 'Rep. Checa',
+  'mexico': 'México', 'méxico': 'México', 'south africa': 'Sud Africa', 'sudáfrica': 'Sud Africa',
+  'south korea': 'Corea', 'korea republic': 'Corea', 'korea': 'Corea',
+  'czech republic': 'R. Checa', 'czechia': 'R. Checa', 'czech': 'R. Checa',
   // Grupo B
   'canada': 'Canadá', 'bosnia and herzegovina': 'Bosnia y Herz.', 'bosnia': 'Bosnia y Herz.',
   'qatar': 'Qatar', 'switzerland': 'Suiza',
@@ -1807,8 +1807,12 @@ async function fetchWorldCupResults() {
       const away = comp.competitors?.find(c => c.homeAway === 'away');
       if (!home || !away) return;
 
-      const homeNorm = normalizeTeamName(home.team?.displayName || home.team?.name || '');
-      const awayNorm = normalizeTeamName(away.team?.displayName || away.team?.name || '');
+      const homeRaw = home.team?.displayName || home.team?.name || '';
+      const awayRaw = away.team?.displayName || away.team?.name || '';
+      console.log('[ESPN partido]', status, '|', homeRaw, home.score, '-', away.score, awayRaw);
+      const homeNorm = normalizeTeamName(homeRaw);
+      const awayNorm = normalizeTeamName(awayRaw);
+      console.log('[ESPN norm]', homeNorm, 'vs', awayNorm);
       const golesHome = parseInt(home.score ?? '0', 10);
       const golesAway = parseInt(away.score ?? '0', 10);
 
