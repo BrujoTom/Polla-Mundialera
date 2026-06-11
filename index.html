@@ -1815,12 +1815,23 @@ async function fetchWorldCupResults() {
       const homeNorm = normalizeTeamName(homeRaw);
       const awayNorm = normalizeTeamName(awayRaw);
 
-      const golesHome = esEnVivo
-        ? (match.score?.fullTime?.home ?? match.score?.halfTime?.home ?? 0)
-        : (match.score?.fullTime?.home ?? 0);
-      const golesAway = esEnVivo
-        ? (match.score?.fullTime?.away ?? match.score?.halfTime?.away ?? 0)
-        : (match.score?.fullTime?.away ?? 0);
+      // football-data.org puede usar fullTime, regularTime o score directo
+      // según la versión y estado del partido — cubrimos todos los casos
+      const sc = match.score || {};
+      const ft = sc.fullTime   || {};
+      const rt = sc.regularTime || {};
+      const ht = sc.halfTime   || {};
+
+      const rawHome = ft.home ?? ft.homeTeam ?? rt.home ?? rt.homeTeam ?? (esEnVivo ? (ht.home ?? ht.homeTeam ?? 0) : null);
+      const rawAway = ft.away ?? ft.awayTeam ?? rt.away ?? rt.awayTeam ?? (esEnVivo ? (ht.away ?? ht.awayTeam ?? 0) : null);
+
+      console.log('[SCORE]', homeRaw, rawHome, '-', rawHome, awayRaw, rawAway,
+        '| ft:', JSON.stringify(ft), '| rt:', JSON.stringify(rt));
+
+      if (rawHome === null || rawHome === undefined || rawAway === null || rawAway === undefined) return;
+
+      const golesHome = rawHome;
+      const golesAway = rawAway;
 
       const partido = estado.partidos.find(p =>
         (p.local === homeNorm && p.visitante === awayNorm) ||
@@ -1884,33 +1895,18 @@ async function fetchWorldCupResults() {
     dot.className = 'update-dot';
     txt.textContent = 'Sin conexión — reintentando...';
     console.error('[FD Error]', err);
-    lastUpdateTime = new Date(); // marcar tiempo aunque falle para no reintentar en loop
   }
 }
 
 
 function iniciarAutoUpdate() {
-  // Limpia cualquier timer previo para no acumular
-  if (autoUpdateInterval) {
-    clearTimeout(autoUpdateInterval);
-    autoUpdateInterval = null;
-  }
-  // Llama a la API y programa el siguiente tick DESPUÉS de que responda,
-  // usando el valor actualizado de liveGamesActive
-  fetchWorldCupResults().finally(() => {
-    const delay = liveGamesActive ? 30000 : 90000;
-    autoUpdateInterval = setTimeout(iniciarAutoUpdate, delay);
-  });
+  fetchWorldCupResults();
+  autoUpdateInterval = setInterval(async () => {
+    await fetchWorldCupResults();
+    clearInterval(autoUpdateInterval);
+    iniciarAutoUpdate();
+  }, liveGamesActive ? 30000 : 60000);
 }
-
-// Reanudar cuando el usuario vuelve a la pestaña
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') {
-    const ahora = Date.now();
-    const ultima = lastUpdateTime ? lastUpdateTime.getTime() : 0;
-    if (ahora - ultima > 90000) iniciarAutoUpdate();
-  }
-});
 
 // ══════════════════════════════════════════════════════════
 //  NAVEGACIÓN
