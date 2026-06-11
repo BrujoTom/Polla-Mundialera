@@ -1884,18 +1884,33 @@ async function fetchWorldCupResults() {
     dot.className = 'update-dot';
     txt.textContent = 'Sin conexión — reintentando...';
     console.error('[FD Error]', err);
+    lastUpdateTime = new Date(); // marcar tiempo aunque falle para no reintentar en loop
   }
 }
 
 
 function iniciarAutoUpdate() {
-  fetchWorldCupResults();
-  autoUpdateInterval = setInterval(async () => {
-    await fetchWorldCupResults();
-    clearInterval(autoUpdateInterval);
-    iniciarAutoUpdate();
-  }, liveGamesActive ? 30000 : 60000);
+  // Limpia cualquier timer previo para no acumular
+  if (autoUpdateInterval) {
+    clearTimeout(autoUpdateInterval);
+    autoUpdateInterval = null;
+  }
+  // Llama a la API y programa el siguiente tick DESPUÉS de que responda,
+  // usando el valor actualizado de liveGamesActive
+  fetchWorldCupResults().finally(() => {
+    const delay = liveGamesActive ? 30000 : 90000;
+    autoUpdateInterval = setTimeout(iniciarAutoUpdate, delay);
+  });
 }
+
+// Reanudar cuando el usuario vuelve a la pestaña
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    const ahora = Date.now();
+    const ultima = lastUpdateTime ? lastUpdateTime.getTime() : 0;
+    if (ahora - ultima > 90000) iniciarAutoUpdate();
+  }
+});
 
 // ══════════════════════════════════════════════════════════
 //  NAVEGACIÓN
