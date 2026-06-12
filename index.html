@@ -1583,7 +1583,7 @@ const GRUPOS_MUNDIAL = {
   'H': [['España','🇪🇸'],['Cabo verde','🇨🇻'],['Arabia S.','🇸🇦'],['Uruguay','🇺🇾']],
   'I': [['Francia','🇫🇷'],['Senegal','🇸🇳'],['Irák','🇮🇶'],['Noruega','🇳🇴']],
   'J': [['Argentina','🇦🇷'],['Argelia','🇩🇿'],['Austria','🇦🇹'],['Jordania','🇯🇴']],
-  'K': [['Portugal','🇵🇹'],['Congo','🇨🇩'],['Uzbekistán','🇺🇿'],['Col','🇨🇴']],
+  'K': [['Portugal','🇵🇹'],['Congo','🇨🇩'],['Uzbekistán','🇺🇿'],['Colombia','🇨🇴']],
   'L': [['Inglaterra','🏴󠁧󠁢󠁥󠁮󠁧󠁿'],['Croacia','🇭🇷'],['Ghana','🇬🇭'],['Panamá','🇵🇦']],
 };
 
@@ -1651,7 +1651,7 @@ function generarPartidosGrupos() {
     {id:'G59',fase:'Grupos',grupo:'Grupo J',local:'Argelia',localFlag:'🇩🇿',visitante:'Austria',visitanteFlag:'🇦🇹',fecha:'27/06 22 hrs',resultado:null},
     {id:'G60',fase:'Grupos',grupo:'Grupo J',local:'Jordania',localFlag:'🇯🇴',visitante:'Argentina',visitanteFlag:'🇦🇷',fecha:'27/06 22 hrs',resultado:null},
     {id:'G61',fase:'Grupos',grupo:'Grupo K',local:'Portugal',localFlag:'🇵🇹',visitante:'Congo',visitanteFlag:'🇨🇩',fecha:'17/06 13 hrs',resultado:null},
-    {id:'G62',fase:'Grupos',grupo:'Grupo K',local:'Uzbekistán',localFlag:'🇺🇿',visitante:'Col',visitanteFlag:'🇨🇴',fecha:'17/06 22 hrs',resultado:null},
+    {id:'G62',fase:'Grupos',grupo:'Grupo K',local:'Uzbekistán',localFlag:'🇺🇿',visitante:'Colombia',visitanteFlag:'🇨🇴',fecha:'17/06 22 hrs',resultado:null},
     {id:'G63',fase:'Grupos',grupo:'Grupo K',local:'Portugal',localFlag:'🇵🇹',visitante:'Uzbekistán',visitanteFlag:'🇺🇿',fecha:'23/06 13 hrs',resultado:null},
     {id:'G64',fase:'Grupos',grupo:'Grupo K',local:'Colombia',localFlag:'🇨🇴',visitante:'Congo',visitanteFlag:'🇨🇩',fecha:'23/06 22 hrs',resultado:null},
     {id:'G65',fase:'Grupos',grupo:'Grupo K',local:'Colombia',localFlag:'🇨🇴',visitante:'Portugal',visitanteFlag:'🇵🇹',fecha:'27/06 19:30 hrs',resultado:null},
@@ -1731,45 +1731,45 @@ function guardarEstado() {
 
 // Mapa de nombres API → nombres en el estado
 const TEAM_NAME_MAP = {
-  // Grupo A — football-data.org usa estos nombres en inglés
+  // Grupo A
   'mexico': 'México', 'méxico': 'México',
-  'south africa': 'Sud Africa', 'sudáfrica': 'Sud Africa',
-  'korea republic': 'Corea', 'south korea': 'Corea', 'korea': 'Corea',
+  'south africa': 'Sud Africa', 'sudáfrica': 'Sud Africa', 'sudafrica': 'Sud Africa',
+  'korea republic': 'Corea', 'south korea': 'Corea', 'korea': 'Corea', 'korea, republic of': 'Corea',
   'czech republic': 'R. Checa', 'czechia': 'R. Checa', 'czech': 'R. Checa',
   // Grupo B
   'canada': 'Canadá',
-  'bosnia and herzegovina': 'Bosnia y Herz.', 'bosnia': 'Bosnia y Herz.',
+  'bosnia and herzegovina': 'Bosnia', 'bosnia': 'Bosnia', 'bosnia-herzegovina': 'Bosnia',
   'qatar': 'Qatar', 'switzerland': 'Suiza',
   // Grupo C
-  'brazil': 'Brasil', 'morocco': 'Marruecos', 'haiti': 'Haití', 'scotland': 'Escocia',
+  'brazil': 'Brasil', 'morocco': 'Marruecos', 'haiti': 'Haití', 'haití': 'Haití', 'scotland': 'Escocia',
   // Grupo D
-  'usa': 'EE.UU.', 'united states': 'EE.UU.', 'us': 'EE.UU.',
-  'turkey': 'Turquía', 'türkiye': 'Turquía',
+  'usa': 'Usa', 'united states': 'Usa', 'us': 'Usa', 'united states of america': 'Usa',
+  'turkey': 'Turquía', 'türkiye': 'Turquía', 'turkiye': 'Turquía',
   'australia': 'Australia', 'paraguay': 'Paraguay',
   // Grupo E
   'germany': 'Alemania',
-  "côte d'ivoire": 'C. de Marfil', "cote d'ivoire": 'C. de Marfil', 'ivory coast': 'C. de Marfil',
+  "côte d'ivoire": 'Costa de Marfíl', "cote d'ivoire": 'Costa de Marfíl', 'ivory coast': 'Costa de Marfíl',
   'ecuador': 'Ecuador', 'curaçao': 'Curazao', 'curacao': 'Curazao',
   // Grupo F
-  'netherlands': 'Países Bajos', 'holland': 'Países Bajos',
+  'netherlands': 'Países bajos', 'holland': 'Países bajos',
   'japan': 'Japón', 'sweden': 'Suecia', 'tunisia': 'Túnez',
   // Grupo G
   'belgium': 'Bélgica', 'egypt': 'Egipto', 'iran': 'Irán',
-  'islamic republic of iran': 'Irán',
+  'islamic republic of iran': 'Irán', 'ir iran': 'Irán',
   'new zealand': 'Nueva Zelanda',
   // Grupo H
   'spain': 'España',
-  'cape verde': 'C. Verde', 'cabo verde': 'C. Verde',
+  'cape verde': 'Cabo verde', 'cabo verde': 'Cabo verde', 'cape verde islands': 'Cabo verde',
   'saudi arabia': 'Arabia S.', 'uruguay': 'Uruguay',
   // Grupo I
-  'france': 'Francia', 'senegal': 'Senegal', 'iraq': 'Irak', 'norway': 'Noruega',
+  'france': 'Francia', 'senegal': 'Senegal', 'iraq': 'Irák', 'norway': 'Noruega',
   // Grupo J
   'argentina': 'Argentina', 'algeria': 'Argelia', 'austria': 'Austria', 'jordan': 'Jordania',
   // Grupo K
   'portugal': 'Portugal',
-  'dr congo': 'RD Congo', 'congo dr': 'RD Congo', 'congo, dr': 'RD Congo',
-  'democratic republic of congo': 'RD Congo', 'congo': 'RD Congo',
-  'uzbekistan': 'Uzbekistán', 'colombia': 'Colombia',
+  'dr congo': 'Congo', 'congo dr': 'Congo', 'congo, dr': 'Congo',
+  'democratic republic of congo': 'Congo', 'congo': 'Congo',
+  'uzbekistan': 'Uzbekistán', 'colombia': 'Colombia', 'col': 'Colombia',
   // Grupo L
   'england': 'Inglaterra', 'croatia': 'Croacia', 'ghana': 'Ghana', 'panama': 'Panamá',
 };
