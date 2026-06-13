@@ -1508,8 +1508,7 @@ main {
 <!-- ════════════ PRONÓSTICOS ════════════ -->
 <section id="sec-pronosticos" class="seccion">
   <div class="card">
-    <div class="card-titulo">📝 Registro de Pronósticos por Partido</div>
-    <div class="alerta alerta-aviso">Registra el pronóstico de cada participante para cada partido.</div>
+    <div class="card-titulo">📝 Pronósticos por Partido</div>
     <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-bottom:18px">
       <div class="form-grupo" style="flex:1;min-width:180px">
         <label>Buscar partido</label>
@@ -1553,18 +1552,6 @@ main {
 </section>
 
 </main>
-
-<!-- ════ MODAL PRONOSTICO ════ -->
-<div class="modal-overlay" id="modal-pronostico">
-  <div class="modal">
-    <div class="modal-titulo" id="modal-pronostico-titulo">📝 Pronóstico</div>
-    <div id="modal-pronostico-body"></div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="cerrarModal('modal-pronostico')">Cancelar</button>
-      <button class="btn btn-primary" onclick="guardarPronosticoModal()">Guardar pronósticos</button>
-    </div>
-  </div>
-</div>
 
 <!-- ════ MODAL RESULTADO ════ -->
 <!-- ════ MODAL ESPECIALES ════ -->
@@ -2175,13 +2162,12 @@ function renderPronosticosPartidos() {
         return `<span class="pronostico-chip ${clase}">${j.nombre}: ${texto}</span>`;
       }).join('');
 
-      html += `<div class="partido-card" style="cursor:pointer" onclick="abrirModalPronostico('${partido.id}')">
+      html += `<div class="partido-card">
         <div class="partido-header">
           <div style="display:flex;align-items:center;gap:8px">
             <span class="tag-fase tag-${partido.fase.toLowerCase().replace(' ','').replace('ó','o')}">${partido.fase}</span>
             <span class="partido-fecha">${partido.fecha}</span>
           </div>
-          <span style="color:var(--text-muted);font-size:12px;font-family:Inter,sans-serif">Clic para editar</span>
         </div>
         <div class="partido-equipos">
           <div class="equipo"><span class="equipo-bandera">${partido.localFlag}</span><span class="equipo-nombre">${partido.local}</span></div>
@@ -2361,63 +2347,6 @@ function verDetalle(jugadorId) {
 }
 
 // ══════════════════════════════════════════════════════════
-//  MODAL PRONÓSTICO
-// ══════════════════════════════════════════════════════════
-let modalPronosticoId = null;
-
-function abrirModalPronostico(partidoId) {
-  const partido = estado.partidos.find(p => p.id === partidoId);
-  if (!partido) return;
-  modalPronosticoId = partidoId;
-  document.getElementById('modal-pronostico-titulo').textContent = `📝 ${partido.local} vs ${partido.visitante}`;
-
-  let html = `<div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:14px;background:var(--bg-surface);border-radius:var(--radius-sm);margin-bottom:16px;border:1px solid var(--border)">
-    <span style="font-size:26px">${partido.localFlag}</span>
-    <span style="font-weight:700;font-size:16px">${partido.local}</span>
-    <span style="color:var(--text-dim);font-weight:700;font-family:Bebas Neue,sans-serif;letter-spacing:2px">VS</span>
-    <span style="font-weight:700;font-size:16px">${partido.visitante}</span>
-    <span style="font-size:26px">${partido.visitanteFlag}</span>
-  </div>`;
-
-  if (estado.jugadores.length === 0) {
-    html += '<div class="alerta alerta-aviso">Agrega participantes primero.</div>';
-  } else {
-    html += '<div style="display:flex;flex-direction:column;gap:8px">';
-    estado.jugadores.forEach(j => {
-      const pron = (estado.pronosticos[j.id]||{})[partido.id];
-      html += `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--bg-surface);border-radius:var(--radius-sm);gap:8px;border:1px solid var(--border);flex-wrap:wrap">
-        <span style="font-weight:600;font-size:14px;flex:1;min-width:70px">${j.nombre}</span>
-        <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
-          <input type="number" class="input-gol" id="pron-${j.id}-local" min="0" max="20" value="${pron?pron.local:''}" placeholder="0" style="width:48px;font-size:22px">
-          <span class="guion-sep" style="font-size:18px">–</span>
-          <input type="number" class="input-gol" id="pron-${j.id}-visitante" min="0" max="20" value="${pron?pron.visitante:''}" placeholder="0" style="width:48px;font-size:22px">
-        </div>
-      </div>`;
-    });
-    html += '</div>';
-  }
-
-  document.getElementById('modal-pronostico-body').innerHTML = html;
-  document.getElementById('modal-pronostico').classList.add('abierto');
-}
-
-function guardarPronosticoModal() {
-  if (!modalPronosticoId) return;
-  estado.jugadores.forEach(j => {
-    const lv = document.getElementById(`pron-${j.id}-local`)?.value;
-    const vv = document.getElementById(`pron-${j.id}-visitante`)?.value;
-    if (lv !== '' && vv !== '' && lv !== undefined) {
-      if (!estado.pronosticos[j.id]) estado.pronosticos[j.id] = {};
-      estado.pronosticos[j.id][modalPronosticoId] = {local: parseInt(lv), visitante: parseInt(vv)};
-    }
-  });
-  guardarEstado();
-  recalcularPuntajes();
-  cerrarModal('modal-pronostico');
-  if (seccionActual === 'pronosticos') renderPronosticosPartidos();
-  if (seccionActual === 'posiciones') renderPosiciones();
-}
-
 // ══════════════════════════════════════════════════════════
 //  MODAL RESULTADO
 // ══════════════════════════════════════════════════════════
