@@ -1693,6 +1693,31 @@ function generarPartidosElim() {
 // ══════════════════════════════════════════════════════════
 let estado = cargarEstado();
 
+// ── MIGRACIÓN: renombrar "Papagallo" -> "Papagayo" y fusionar duplicados ──
+(function migrarPapagayo() {
+  const jugs = estado.jugadores || [];
+  const esPapagallo = j => (j.nombre || '').toLowerCase() === 'papagallo';
+  const esPapagayo  = j => (j.nombre || '').toLowerCase() === 'papagayo';
+
+  const viejo  = jugs.find(esPapagallo);
+  const nuevo  = jugs.find(esPapagayo);
+
+  if (viejo && nuevo && viejo.id !== nuevo.id) {
+    // Existen ambos (duplicado) -> fusionar pronósticos en "nuevo" y eliminar "viejo"
+    estado.pronosticos[nuevo.id] = Object.assign(
+      {}, estado.pronosticos[viejo.id] || {}, estado.pronosticos[nuevo.id] || {}
+    );
+    delete estado.pronosticos[viejo.id];
+    delete estado.puntajes[viejo.id];
+    estado.jugadores = jugs.filter(j => j.id !== viejo.id);
+    guardarEstado();
+  } else if (viejo && !nuevo) {
+    // Solo existe "Papagallo" -> renombrar a "Papagayo"
+    viejo.nombre = 'Papagayo';
+    guardarEstado();
+  }
+})();
+
 function estadoDefault() {
   return {
     jugadores: [],
