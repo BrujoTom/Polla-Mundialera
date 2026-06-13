@@ -1433,9 +1433,10 @@ main {
 
   <!-- Estado de auto-actualización -->
   <div class="auto-update-bar" id="auto-update-status">
-    <span class="update-dot" id="update-dot"></span>
-    <span id="update-text">Iniciando sincronización de resultados en tiempo real...</span>
-    <span style="margin-left:auto;opacity:0.5;font-size:11px" id="update-time"></span>
+    <span class="update-dot js-update-dot" id="update-dot"></span>
+    <span class="js-update-text" id="update-text">Iniciando sincronización de resultados en tiempo real...</span>
+    <span class="js-update-time" style="margin-left:auto;opacity:0.5;font-size:11px" id="update-time"></span>
+    <button onclick="fetchWorldCupResults()" title="Actualizar ahora" style="background:none;border:1px solid var(--border-bright);border-radius:6px;color:var(--text-muted);cursor:pointer;font-size:13px;padding:2px 8px;margin-left:8px;flex-shrink:0">🔄</button>
   </div>
 
   <div class="two-col">
@@ -1524,8 +1525,9 @@ main {
   <div class="card">
     <div class="card-titulo">⚽ Resultados de Partidos</div>
     <div class="alerta alerta-info" id="resultados-auto-info" style="display:flex;align-items:center;gap:10px">
-      <span id="update-dot" class="update-dot"></span>
-      <span>Los resultados se sincronizan automáticamente con ESPN. <span id="update-text">Conectando...</span> <span id="update-time" style="color:var(--text-dim)"></span></span>
+      <span class="update-dot js-update-dot"></span>
+      <span>Los resultados se sincronizan automáticamente. <span class="js-update-text">Conectando...</span> <span class="js-update-time" style="color:var(--text-dim)"></span></span>
+      <button onclick="fetchWorldCupResults()" title="Actualizar ahora" style="background:none;border:1px solid var(--border-bright);border-radius:6px;color:var(--text-muted);cursor:pointer;font-size:13px;padding:2px 8px;margin-left:auto;flex-shrink:0">🔄 Actualizar</button>
     </div>
     <div id="lista-resultados-partidos"></div>
   </div>
@@ -1809,9 +1811,13 @@ let lastUpdateTime = null;
 let liveGamesActive = false;
 
 async function fetchWorldCupResults() {
-  const dot    = document.getElementById('update-dot');
-  const txt    = document.getElementById('update-text');
-  const timeEl = document.getElementById('update-time');
+  const dots    = document.querySelectorAll('.js-update-dot');
+  const txts    = document.querySelectorAll('.js-update-text');
+  const timeEls = document.querySelectorAll('.js-update-time');
+  const setDot  = (cls) => dots.forEach(el => { el.className = 'update-dot js-update-dot' + (cls ? ' ' + cls : ''); });
+  const setTxt  = (s)   => txts.forEach(el => { el.textContent = s; });
+  const setTime = (s)   => timeEls.forEach(el => { el.textContent = s; });
+  const ahora   = () => new Date().toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'});
 
   try {
     // Llamamos a nuestro propio proxy en Vercel (evita CORS)
@@ -1822,9 +1828,23 @@ async function fetchWorldCupResults() {
     const data = await response.json();
     const matches = data.matches || [];
 
+    if (data.error) {
+      console.warn('[FD Warning]', data.error);
+    }
+    console.log(`[FD] ${matches.length} partidos recibidos del proxy`);
+
+    if (matches.length === 0) {
+      setDot('');
+      setTxt(data.error ? `⚠️ ${data.error}` : 'Sin partidos disponibles aún');
+      lastUpdateTime = new Date();
+      setTime(ahora());
+      return;
+    }
+
     let actualizados = 0;
     let tickerItems  = [];
     let liveList     = [];
+    let noEncontrados = [];
 
     matches.forEach(match => {
       const st = match.status; // FINISHED, IN_PLAY, PAUSED, TIMED, SCHEDULED
@@ -1834,44 +1854,58 @@ async function fetchWorldCupResults() {
 
       const homeRaw = match.homeTeam?.name || match.homeTeam?.shortName || '';
       const awayRaw = match.awayTeam?.name || match.awayTeam?.shortName || '';
-      console.log('[FD]', st, '|', homeRaw, 'vs', awayRaw, '|',
-        match.score?.fullTime?.home, '-', match.score?.fullTime?.away);
 
       const homeNorm = normalizeTeamName(homeRaw);
       const awayNorm = normalizeTeamName(awayRaw);
 
-      const golesHome = esEnVivo
-        ? (match.score?.fullTime?.home ?? match.score?.halfTime?.home ?? 0)
-        : (match.score?.fullTime?.home ?? 0);
-      const golesAway = esEnVivo
-        ? (match.score?.fullTime?.away ?? match.score?.halfTime?.away ?? 0)
-        : (match.score?.fullTime?.away ?? 0);
+      // football-data.org puede usar fullTime, regularTime o score directo
+      const sc = match.score || {};
+      const ft = sc.fullTime    || {};
+      const rt = sc.regularTime || {};
+      const ht = sc.halfTime    || {};
+
+      const rawHome = ft.home ?? rt.home ?? (esEnVivo ? (ht.home ?? 0) : null);
+      const rawAway = ft.away ?? rt.away ?? (esEnVivo ? (ht.away ?? 0) : null);
+
+      console.log('[FD]', st, '|', homeRaw, '->', homeNorm, rawHome, '-', rawAway, awayNorm, '<-', awayRaw);
+
+      if (rawHome === null || rawHome === undefined || rawAway === null || rawAway === undefined) return;
+
+      const golesHome = rawHome;
+      const golesAway = rawAway;
 
       const partido = estado.partidos.find(p =>
         (p.local === homeNorm && p.visitante === awayNorm) ||
         (p.local === awayNorm  && p.visitante === homeNorm)
       );
 
-      if (partido) {
-        const invertido = partido.local === awayNorm;
-        const resLocal = invertido ? golesAway  : golesHome;
-        const resVis   = invertido ? golesHome  : golesAway;
-
-        partido.enVivo = esEnVivo;
-        partido.minuto = esEnVivo ? (match.minute ?? '') : null;
-
-        if (!partido.resultado ||
-            partido.resultado.local    !== resLocal ||
-            partido.resultado.visitante !== resVis) {
-          partido.resultado = { local: resLocal, visitante: resVis };
-          actualizados++;
-          tickerItems.push(
-            `${partido.local} ${resLocal}-${resVis} ${partido.visitante}${esEnVivo ? ' 🔴' : ''}`
-          );
-        }
-        if (esEnVivo) liveList.push(partido);
+      if (!partido) {
+        noEncontrados.push(`${homeNorm} vs ${awayNorm} (API: ${homeRaw} vs ${awayRaw})`);
+        return;
       }
+
+      const invertido = partido.local === awayNorm;
+      const resLocal = invertido ? golesAway  : golesHome;
+      const resVis   = invertido ? golesHome  : golesAway;
+
+      partido.enVivo = esEnVivo;
+      partido.minuto = esEnVivo ? (match.minute ?? '') : null;
+
+      if (!partido.resultado ||
+          partido.resultado.local    !== resLocal ||
+          partido.resultado.visitante !== resVis) {
+        partido.resultado = { local: resLocal, visitante: resVis };
+        actualizados++;
+        tickerItems.push(
+          `${partido.local} ${resLocal}-${resVis} ${partido.visitante}${esEnVivo ? ' 🔴' : ''}`
+        );
+      }
+      if (esEnVivo) liveList.push(partido);
     });
+
+    if (noEncontrados.length > 0) {
+      console.warn('[FD] Partidos finalizados/en vivo sin match en la app:', noEncontrados);
+    }
 
     if (actualizados > 0) {
       guardarEstado();
@@ -1897,17 +1931,17 @@ async function fetchWorldCupResults() {
     }
 
     lastUpdateTime = new Date();
-    dot.className = 'update-dot active';
-    txt.textContent = liveGamesActive
+    setDot('active');
+    setTxt(liveGamesActive
       ? `🔴 ${liveList.length} partido(s) EN VIVO — actualizando cada 30 seg`
-      : `Sincronizado — ${actualizados > 0 ? actualizados + ' resultado(s) nuevo(s)' : 'sin cambios'}`;
-    timeEl.textContent = lastUpdateTime.toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'});
+      : `Sincronizado — ${actualizados > 0 ? actualizados + ' resultado(s) nuevo(s)' : 'sin cambios'}`);
+    setTime(ahora());
 
   } catch (err) {
-    const dot = document.getElementById('update-dot');
-    const txt = document.getElementById('update-text');
-    dot.className = 'update-dot';
-    txt.textContent = 'Sin conexión — reintentando...';
+    const dots = document.querySelectorAll('.js-update-dot');
+    const txts = document.querySelectorAll('.js-update-text');
+    dots.forEach(el => el.className = 'update-dot js-update-dot');
+    txts.forEach(el => el.textContent = 'Sin conexión — reintentando...');
     console.error('[FD Error]', err);
   }
 }
