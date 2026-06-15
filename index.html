@@ -1731,6 +1731,8 @@ function cargarEstado() {
       def.especiales = parsed.especiales || {};
       return def;
     }
+    // Resetear estado en vivo al cargar (se actualiza con la API al conectar)
+    (parsed.partidos || []).forEach(p => { p.enVivo = false; p.minuto = null; });
     return parsed;
   } catch(e) { return estadoDefault(); }
 }
@@ -1880,23 +1882,42 @@ async function fetchWorldCupResults() {
       const resLocal = invertido ? golesAway  : golesHome;
       const resVis   = invertido ? golesHome  : golesAway;
 
-      partido.enVivo = esEnVivo;
-      partido.minuto = esEnVivo ? (match.minute ?? '') : null;
-
-      if (!partido.resultado ||
+      // Detectar cambios en marcador O en estado en vivo
+      const marcadorCambio = !partido.resultado ||
           partido.resultado.local    !== resLocal ||
-          partido.resultado.visitante !== resVis) {
+          partido.resultado.visitante !== resVis;
+      const vivoCambio = !!partido.enVivo !== esEnVivo;
+
+      partido.enVivo = esEnVivo;
+      partido.minuto = esEnVivo ? (match.minute ?? match.minutesPlayed ?? '') : null;
+      // Si el partido terminó, limpiar enVivo
+      if (esFinal) { partido.enVivo = false; partido.minuto = null; }
+
+      if (marcadorCambio) {
         partido.resultado = { local: resLocal, visitante: resVis };
         actualizados++;
         tickerItems.push(
           `${partido.local} ${resLocal}-${resVis} ${partido.visitante}${esEnVivo ? ' 🔴' : ''}`
         );
       }
+      // Contar como "actualizado" si cambió el estado vivo aunque no el marcador
+      if (vivoCambio && !marcadorCambio) actualizados++;
+
       if (esEnVivo) liveList.push(partido);
     });
 
+    // Limpiar enVivo de partidos que la API ya no reporta como en juego
+    // (evita que queden partidos "en vivo" fantasma si la API no los devuelve)
+    estado.partidos.forEach(p => {
+      if (p.enVivo && !liveList.find(l => l.id === p.id)) {
+        p.enVivo = false;
+        p.minuto = null;
+        actualizados++;
+      }
+    });
+
     if (noEncontrados.length > 0) {
-      console.warn('[FD] Partidos finalizados/en vivo sin match en la app:', noEncontrados);
+      console.warn('[FD] Sin match en la app:', noEncontrados);
     }
 
     if (actualizados > 0) {
