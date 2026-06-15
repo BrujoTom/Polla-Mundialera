@@ -1861,20 +1861,42 @@ async function fetchWorldCupResults() {
       const rawHome = ft.home ?? rt.home ?? (esEnVivo ? (ht.home ?? 0) : null);
       const rawAway = ft.away ?? rt.away ?? (esEnVivo ? (ht.away ?? 0) : null);
 
-      console.log('[FD]', st, '|', homeRaw, '->', homeNorm, rawHome, '-', rawAway, awayNorm, '<-', awayRaw);
-
       if (rawHome === null || rawHome === undefined || rawAway === null || rawAway === undefined) return;
 
       const golesHome = rawHome;
       const golesAway = rawAway;
 
-      const partido = estado.partidos.find(p =>
+      // Búsqueda robusta: primero exacta, luego por similitud de palabras clave
+      // Esto evita fallos por tildes, comillas tipográficas, variantes de nombre
+      function similitud(apiName, appName) {
+        if (!apiName || !appName) return false;
+        // Normalizar: minúsculas, sin tildes, sin puntuación especial
+        const clean = s => s.toLowerCase()
+          .replace(/[à-ÿ]/g, c => 'aeiounco'['àáâãäåèéêëìíîïòóôõöùúûünç'.indexOf(c)] ?? c)
+          .replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+        const a = clean(apiName), b = clean(appName);
+        if (a === b) return true;
+        // Verificar si alguna palabra clave (>3 chars) de la API aparece en el nombre de la app
+        const palabras = a.split(' ').filter(w => w.length > 3);
+        return palabras.length > 0 && palabras.every(w => b.includes(w));
+      }
+
+      let partido = estado.partidos.find(p =>
         (p.local === homeNorm && p.visitante === awayNorm) ||
         (p.local === awayNorm  && p.visitante === homeNorm)
       );
 
+      // Si no encontró exacto, intentar con matching flexible
       if (!partido) {
-        noEncontrados.push(`${homeNorm} vs ${awayNorm} (API: ${homeRaw} vs ${awayRaw})`);
+        partido = estado.partidos.find(p =>
+          (similitud(homeRaw, p.local) && similitud(awayRaw, p.visitante)) ||
+          (similitud(homeRaw, p.visitante) && similitud(awayRaw, p.local))
+        );
+        if (partido) console.log('[FD] Match flexible:', homeRaw, 'vs', awayRaw, '->', partido.local, 'vs', partido.visitante);
+      }
+
+      if (!partido) {
+        noEncontrados.push(`${homeRaw} vs ${awayRaw} (norm: ${homeNorm} vs ${awayNorm})`);
         return;
       }
 
@@ -1918,6 +1940,8 @@ async function fetchWorldCupResults() {
 
     if (noEncontrados.length > 0) {
       console.warn('[FD] Sin match en la app:', noEncontrados);
+      // Mostrar en la barra de estado para diagnóstico visual
+      setTxt('⚠️ Sin match: ' + noEncontrados.join(' | '));
     }
 
     if (actualizados > 0) {
