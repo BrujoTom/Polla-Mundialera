@@ -1762,7 +1762,9 @@ const TEAM_NAME_MAP = {
   'australia': 'Australia', 'paraguay': 'Paraguay',
   // Grupo E
   'germany': 'Alemania',
-  "côte d'ivoire": 'Costa de Marfíl', "cote d'ivoire": 'Costa de Marfíl', 'ivory coast': 'Costa de Marfíl',
+  "côte d'ivoire": 'Costa de Marfíl', "cote d'ivoire": 'Costa de Marfíl',
+  "côte d\u2019ivoire": 'Costa de Marfíl', "cote d\u2019ivoire": 'Costa de Marfíl',
+  'ivory coast': 'Costa de Marfíl',
   'ecuador': 'Ecuador', 'curaçao': 'Curazao', 'curacao': 'Curazao',
   // Grupo F
   'netherlands': 'Países bajos', 'holland': 'Países bajos',
@@ -1790,7 +1792,10 @@ const TEAM_NAME_MAP = {
 
 function normalizeTeamName(name) {
   if (!name) return '';
-  return TEAM_NAME_MAP[name.toLowerCase()] || name;
+  // Normalizar comillas tipográficas U+2018/U+2019 → recta U+0027
+  // football-data.org usa "Côte d'Ivoire" con comilla tipográfica
+  const clean = name.toLowerCase().trim().replace(/[\u2018\u2019]/g, "'");
+  return TEAM_NAME_MAP[clean] || name;
 }
 
 let autoUpdateInterval = null;
