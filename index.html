@@ -1986,12 +1986,28 @@ async function fetchWorldCupResults() {
 
 function iniciarAutoUpdate() {
   fetchWorldCupResults();
+  if (autoUpdateInterval) clearInterval(autoUpdateInterval);
   autoUpdateInterval = setInterval(async () => {
     await fetchWorldCupResults();
     clearInterval(autoUpdateInterval);
     iniciarAutoUpdate();
   }, liveGamesActive ? 30000 : 60000);
 }
+
+// Recupera la sincronización si la pestaña estuvo en segundo plano,
+// suspendida o si el navegador throttleó el setInterval (muy común en
+// móviles). Sin esto, un partido puede terminar mientras la pestaña
+// estaba inactiva y la app nunca se entera al volver a primer plano.
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    fetchWorldCupResults();
+  }
+});
+
+// Respaldo extra: revisa cada vez que la ventana recupera el foco
+window.addEventListener('focus', () => {
+  fetchWorldCupResults();
+});
 
 // ══════════════════════════════════════════════════════════
 //  NAVEGACIÓN
