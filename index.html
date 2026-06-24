@@ -1700,7 +1700,7 @@ function estadoDefault() {
     pronosticos: {},
     puntajes: {},
     especiales: {},
-    version: 5,
+    version: 6,
   };
 }
 
@@ -1709,7 +1709,7 @@ function cargarEstado() {
     const raw = localStorage.getItem('polla_mundial_2026');
     if (!raw) return estadoDefault();
     const parsed = JSON.parse(raw);
-    if (!parsed.partidos || parsed.version !== 5) {
+    if (!parsed.partidos || parsed.version !== 6) {
       const def = estadoDefault();
       def.jugadores = parsed.jugadores || [];
       def.pronosticos = parsed.pronosticos || {};
@@ -2562,16 +2562,15 @@ function compartirTablaWhatsApp() {
   jugador.especiales = {campeon:'Brasil',subcampeon:'Inglaterra',goleador:'Harry Kane',semifinalistas:['Holanda','Portugal','España','Inglaterra']};
 })();
 
-// ── PRELOAD SAMPAYO (segunda instancia — eliminada, consolidada arriba) ──
   guardarEstado();
 
 // ── PRELOAD PAPAGALLO (Chuldo) ──
-// PDF Papagallo: G15=Esco-Marr(1-2), G16=Brasil-Haiti(5-0)
+// PDF Papagayo: G15=Esco-Marr(1-2), G16=Brasil-Haiti(5-0)
 // G19=USA-Par(2-1), G20=Aus-Tur(1-1), G21=USA-Aus(2-0), G22=Tur-Par(1-1)
 // G29=Cur-CMarfil(0-3), G30=Ecu-Ale(1-2)
 // G46=Uru-CVerde(3-0)
 (function() {
-  var pron_papagallo = {
+  var pron_papagayo = {
     'G1':{local:2,visitante:0},'G2':{local:1,visitante:1},'G3':{local:2,visitante:1},'G4':{local:1,visitante:1},'G5':{local:0,visitante:1},'G6':{local:0,visitante:1},
     'G7':{local:1,visitante:0},'G8':{local:0,visitante:3},'G9':{local:2,visitante:0},'G10':{local:1,visitante:0},'G11':{local:1,visitante:0},'G12':{local:2,visitante:1},
     // Grupo C: G15=Esco-Marr(1-2), G16=Brasil-Haiti(5-0)
@@ -2592,13 +2591,13 @@ function compartirTablaWhatsApp() {
     'G61':{local:2,visitante:2},'G62':{local:0,visitante:2},'G63':{local:3,visitante:0},'G64':{local:2,visitante:1},'G65':{local:2,visitante:2},'G66':{local:1,visitante:0},
     'G67':{local:2,visitante:1},'G68':{local:2,visitante:0},'G69':{local:2,visitante:0},'G70':{local:0,visitante:3},'G71':{local:0,visitante:4},'G72':{local:1,visitante:1}
   };
-  var jugador = estado.jugadores.find(function(j){ return j.nombre.toLowerCase() === 'papagallo'; });
+  var jugador = estado.jugadores.find(function(j){ return j.nombre.toLowerCase() === 'papagayo'; });
   if (!jugador) {
-    jugador = {id:'j_auto_papagallo', nombre:'Papagallo', especiales:{campeon:'',subcampeon:'',goleador:'',semifinalistas:[]}};
+    jugador = {id:'j_auto_papagayo', nombre:'Papagayo', especiales:{campeon:'',subcampeon:'',goleador:'',semifinalistas:[]}};
     estado.jugadores.push(jugador);
   }
   if (!estado.pronosticos[jugador.id]) estado.pronosticos[jugador.id] = {};
-  Object.assign(estado.pronosticos[jugador.id], pron_papagallo);
+  Object.assign(estado.pronosticos[jugador.id], pron_papagayo);
   jugador.especiales = {campeon:'Espa\u00f1a',subcampeon:'Francia',goleador:'Harry Kane',semifinalistas:['Espa\u00f1a','Inglaterra','Francia','Argentina']};
 })();
   guardarEstado();
