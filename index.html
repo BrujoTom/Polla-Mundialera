@@ -2147,7 +2147,23 @@ function calcularPuntajeJugador(jugadorId) {
   return {total, detalle};
 }
 
+function actualizarSemifinalistasOficiales() {
+  // Los semifinalistas "oficiales" son los equipos que ya se clasificaron
+  // desde Cuartos de Final. Los recalculamos siempre desde los partidos reales
+  // para que el bono de 5 pts por semifinalista acertado quede al día.
+  const semis = estado.partidos
+    .filter(p => p.fase === 'Cuartos' && p.clasificado)
+    .map(p => p.clasificado);
+  if (!estado.especiales) estado.especiales = {};
+  const anterior = (estado.especiales.semifinalistas || []).slice().sort().join(',');
+  const nuevo = semis.slice().sort().join(',');
+  if (anterior !== nuevo) {
+    estado.especiales.semifinalistas = semis;
+  }
+}
+
 function recalcularPuntajes() {
+  actualizarSemifinalistasOficiales();
   estado.jugadores.forEach(j => {
     estado.puntajes[j.id] = calcularPuntajeJugador(j.id);
   });
@@ -2245,13 +2261,23 @@ function renderJugadores() {
     + '</div></div>';
   html += estado.jugadores.map(function(j) {
     const esp = j.especiales || {};
+    const semisOk = esp_g.semifinalistas || [];
+    const semisJugador = esp.semifinalistas || [];
+    const semisPts = semisJugador.filter(function(s){ return semisOk.includes(s); }).length * 5;
+    const semisHtml = semisJugador.length
+      ? semisJugador.map(function(s){
+          return semisOk.includes(s)
+            ? '<span style="color:#22c55e">' + s + ' ✓</span>'
+            : '<span>' + s + '</span>';
+        }).join(', ')
+      : '—';
     return '<div class="partido-card">'
       + '<div class="partido-header"><b style="font-size:15px">' + j.nombre + '</b></div>'
       + '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px;font-size:13px;font-family:Inter,sans-serif">'
       + '<div>🏆 Campeón: <b>' + (esp.campeon || '—') + '</b></div>'
       + '<div>🥈 Subcampeón: <b>' + (esp.subcampeon || '—') + '</b></div>'
       + '<div>⚽ Goleador: <b>' + (esp.goleador || '—') + '</b></div>'
-      + '<div>🎖 Semis: <b>' + ((esp.semifinalistas || []).join(', ') || '—') + '</b></div>'
+      + '<div>🎖 Semis: <b>' + semisHtml + '</b>' + (semisPts > 0 ? ' <span style="color:#c084fc;font-weight:700">(+' + semisPts + ' pts)</span>' : '') + '</div>'
       + '</div></div>';
   }).join('');
   cont.innerHTML = html;
