@@ -3132,6 +3132,15 @@ function compartirTablaWhatsApp() {
   var j = estado.jugadores.find(function(x){ return x.nombre.toLowerCase()==='papagayo'; });
   if(j){ if(!estado.pronosticos[j.id]) estado.pronosticos[j.id]={}; Object.assign(estado.pronosticos[j.id],p); }
 })();
+
+// ── RESULTADOS OFICIALES: Campeón y Goleador ──
+(function(){
+  if(!estado.especiales) estado.especiales = {};
+  estado.especiales.campeon = 'España';
+  estado.especiales.goleador = 'Mbappe';
+})();
+
+recalcularPuntajes();
 guardarEstado();
 
 recalcularPuntajes();
